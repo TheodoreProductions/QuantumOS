@@ -15,8 +15,8 @@ def generateBlock(x, y, size):
 
 def generateBlocks(blocks, size):
     blocksList = []
-    for i in blocks:
-        blocksList.append(generateBlock(i[0], i[1], size))
+    for block in blocks:
+        blocksList.append(generateBlock(block[0], block[1], size))
     return blocksList
 
 def main():
@@ -94,15 +94,19 @@ def main():
                 if yVelocity > 0:  # Prevents overshooting above zero
                     yVelocity = 0
 
-        for i in blocks:
+        for block in blocks:
             # Apply movement
-            i.x += xVelocity
-            i.y += yVelocity
+            block.x += xVelocity
+            block.y += yVelocity
+
+        for block in blocks:
+            if player.colliderect(block):
+                print('coll')
 
         # Drawing
         screen.fill(white)
-        for i in blocks:
-            pygame.draw.rect(screen, green, i)
+        for block in blocks:
+            pygame.draw.rect(screen, green, block)
         pygame.draw.rect(screen, black, player)
         pygame.display.flip()
 
