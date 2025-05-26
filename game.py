@@ -19,6 +19,12 @@ def turnBlocksIntoPygameRects(blocks):
         newBlocks.append(newRect)
     return newBlocks
 
+def addObject(objects, blockSize, colors):
+    objectList = []
+    for obj in objects:
+        if obj[0] == 'grass':
+            objectList.append(rectObjects.square(obj[1], obj[2], 1, blockSize, colors))
+
 def main():
     print('loading...')
     pygame.init()
@@ -34,19 +40,11 @@ def main():
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption("The game of getting destroyed")
 
-    # Colors
-    pureWhite = (255, 255, 255)
-    pureRed = (255, 0, 0)
-    pureGreen = (0, 255, 0)
-    pureBlue = (0, 0, 255)
-    pureBlack = (0, 0, 0)
-    halfGray = (128, 128, 128)
-
     # Generate blocks
     blockSize = 64
     pixelSize = 4
-    blocks = [rectObjects.square(2, 2, 1, blockSize, halfGray), 
-              rectObjects.square(3, 2, 1, blockSize, pureRed)]
+    blocks = [rectObjects.square(2, 2, 1, blockSize, (128, 128, 128)), 
+              rectObjects.square(3, 2, 1, blockSize, (255, 0, 0))]
     blocks = turnBlocksIntoPygameRects(blocks)
 
     # Player settings
@@ -105,10 +103,10 @@ def main():
             block[0].y += yVelocity
 
         # Drawing
-        screen.fill(pureWhite)
+        screen.fill((255, 255, 255))
         for block in blocks:
             pygame.draw.rect(screen, block[1], block[0])
-        pygame.draw.rect(screen, pureBlack, player)
+        pygame.draw.rect(screen, (0, 0, 0), player)
         pygame.display.flip()
 
     # Quit
