@@ -1,6 +1,8 @@
 import pygame
 import sys
 
+from objects import rectObjects
+
 def do_nothing():
     a = 0
 
@@ -9,15 +11,13 @@ def settingCustomize():
     height = input('Please enter the screen height:')
     return width, height
 
-def generateBlock(x, y, size):
-    blocks = pygame.Rect(x * size, y * size, size, size)
-    return blocks
-
-def generateBlocks(blocks, size):
-    blocksList = []
-    for block in blocks:
-        blocksList.append(generateBlock(block[0], block[1], size))
-    return blocksList
+def turnBlocksIntoPygameRects(blocks):
+    newBlocks = []
+    for i in blocks:
+        rect = pygame.Rect(i[0], i[1], i[2], i[3])
+        newRect = [rect, i[4]]
+        newBlocks.append(newRect)
+    return newBlocks
 
 def main():
     print('loading...')
@@ -32,25 +32,28 @@ def main():
 
     # Screen settings
     screen = pygame.display.set_mode((width, height))
-    pygame.display.set_caption("The adventure")
+    pygame.display.set_caption("The game of getting destroyed")
 
     # Colors
-    white = (255, 255, 255)
-    red = (255, 0, 0)
-    green = (0, 255, 0)
-    blue = (0, 0, 255)
-    black = (0, 0, 0)
+    pureWhite = (255, 255, 255)
+    pureRed = (255, 0, 0)
+    pureGreen = (0, 255, 0)
+    pureBlue = (0, 0, 255)
+    pureBlack = (0, 0, 0)
+    halfGray = (128, 128, 128)
 
     # Generate blocks
-    blocksXY = [[2, 2], [3, 2]]
     blockSize = 64
-    blocks = generateBlocks(blocksXY, blockSize)
+    pixelSize = 4
+    blocks = [rectObjects.square(2, 2, 1, blockSize, halfGray), 
+              rectObjects.square(3, 2, 1, blockSize, pureRed)]
+    blocks = turnBlocksIntoPygameRects(blocks)
 
     # Player settings
     xVelocity = 0
     yVelocity = 0
-    speed = 0.1
-    frictionSpeed = 0.1
+    speed = 0.3
+    frictionSpeed = 0.5
 
     player = pygame.Rect((width / 2) - 25, (height / 2) - 25, blockSize, blockSize)
 
@@ -62,7 +65,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-                print('Thank you for using a TheodorePriductions product.')
+                print('Thank you for using a TheodoreProductions product.')
 
         # Movement
         keys = pygame.key.get_pressed()
@@ -79,7 +82,9 @@ def main():
                 xVelocity += frictionSpeed
                 if xVelocity > 0:  # Prevents overshooting above zero
                     xVelocity = 0
-        # ---------------------
+
+        # ---------------------------------------------------------------------------------
+
         if keys[pygame.K_UP]:
             yVelocity += speed
         elif keys[pygame.K_DOWN]:
@@ -96,18 +101,14 @@ def main():
 
         for block in blocks:
             # Apply movement
-            block.x += xVelocity
-            block.y += yVelocity
-
-        for block in blocks:
-            if player.colliderect(block):
-                print('coll')
+            block[0].x += xVelocity
+            block[0].y += yVelocity
 
         # Drawing
-        screen.fill(white)
+        screen.fill(pureWhite)
         for block in blocks:
-            pygame.draw.rect(screen, green, block)
-        pygame.draw.rect(screen, black, player)
+            pygame.draw.rect(screen, block[1], block[0])
+        pygame.draw.rect(screen, pureBlack, player)
         pygame.display.flip()
 
     # Quit
