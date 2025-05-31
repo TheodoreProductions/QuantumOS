@@ -1,7 +1,7 @@
 import pygame
 import sys
 
-from objects import rectObjects
+from objects import decodeBlocks
 
 def do_nothing():
     a = 0
@@ -19,36 +19,16 @@ def turnBlocksIntoPygameRects(blocks):
         newBlocks.append(newRect)
     return newBlocks
 
-def readCode(code):
-    codes = []
-    blocks = []
-    for i in range(len(code) / 2):
-        currentCode = code[(2 * i) - 1] + code[2 * i]
-        codes.append(currentCode)
-    for i in currentCode:
-        if i == '00':
-            blocks.append(['grass', ])
-
-
-def addObjects(objects, blockSize):
-    objectList = []
-    p = 0.0625
-    for obj in objects:
-        if obj[0] == 'grass':
-            objectList.append(rectObjects.rect(obj[1], obj[2], obj[3], obj[4], blockSize, (0, 128, 0)))
-        elif obj[0] == 'path0':
-            objectList.append(rectObjects.rect(obj[1], obj[2], obj[3], obj[4], blockSize, (155, 155, 115)))
-        elif obj[0] == 'pathN':
-            objectList.append(rectObjects.rect(obj[1], obj[2], 1, p, blockSize, (110, 75, 0)))
-            objectList.append(rectObjects.rect(obj[1], obj[2] + p, 1, 1 - p, blockSize, (155, 155, 115)))
-        elif obj[0] == 'pathE':
-            objectList.append(rectObjects.rect(obj[1] + 1 - p, obj[2], p, 1, blockSize, (110, 75, 0)))
-            objectList.append(rectObjects.rect(obj[1], obj[2], 1 - p, 1, blockSize, (155, 155, 115)))
-    return objectList
-
 def main():
     print('loading...')
     pygame.init()
+
+    # Colors
+    pureWhite = (255, 255, 255)
+    pureBlack = (0, 0, 0)
+    pureRed = (255, 0, 0)
+    pureGreen = (0, 255, 0)
+    pureBlue = (0, 0, 255)
 
     # Customize settings
     answer = input('Do you want to customize settings(y/n)?\n')
@@ -63,9 +43,9 @@ def main():
 
     # Generate blocks
     blockSize = 64
-    debugBlocks = [['grass', 1, 1, 1, 1], ['path0', 2, 1, 1, 1], ['pathN', 3, 1], ['pathE', 4, 1]]
-    blocks = [['grass', 1, 1, 1, 1], ['path0', 2, 1, 1, 1], ['pathN', 3, 1], ['pathE', 4, 1]]
-    blocks = addObjects(blocks, blockSize)
+    pixelSize = 4
+    blocks = [['grass', 0, 0, 1, 1], ['tottaly not grass', 0, 1, 1, 1]]
+    blocks = decodeBlocks.decodeBlocks(blocks, blockSize, pixelSize)
     blocks = turnBlocksIntoPygameRects(blocks)
 
     # Player settings
@@ -124,10 +104,10 @@ def main():
             block[0].y += yVelocity
 
         # Drawing
-        screen.fill((255, 255, 255))
+        screen.fill(pureWhite)
         for block in blocks:
             pygame.draw.rect(screen, block[1], block[0])
-        pygame.draw.rect(screen, (0, 0, 0), player)
+        pygame.draw.rect(screen, pureBlack, player)
         pygame.display.flip()
 
     # Quit
