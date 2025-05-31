@@ -19,11 +19,32 @@ def turnBlocksIntoPygameRects(blocks):
         newBlocks.append(newRect)
     return newBlocks
 
-def addObject(objects, blockSize, colors):
+def readCode(code):
+    codes = []
+    blocks = []
+    for i in range(len(code) / 2):
+        currentCode = code[(2 * i) - 1] + code[2 * i]
+        codes.append(currentCode)
+    for i in currentCode:
+        if i == '00':
+            blocks.append(['grass', ])
+
+
+def addObjects(objects, blockSize):
     objectList = []
+    p = 0.0625
     for obj in objects:
         if obj[0] == 'grass':
-            objectList.append(rectObjects.square(obj[1], obj[2], 1, blockSize, colors))
+            objectList.append(rectObjects.rect(obj[1], obj[2], obj[3], obj[4], blockSize, (0, 128, 0)))
+        elif obj[0] == 'path0':
+            objectList.append(rectObjects.rect(obj[1], obj[2], obj[3], obj[4], blockSize, (155, 155, 115)))
+        elif obj[0] == 'pathN':
+            objectList.append(rectObjects.rect(obj[1], obj[2], 1, p, blockSize, (110, 75, 0)))
+            objectList.append(rectObjects.rect(obj[1], obj[2] + p, 1, 1 - p, blockSize, (155, 155, 115)))
+        elif obj[0] == 'pathE':
+            objectList.append(rectObjects.rect(obj[1] + 1 - p, obj[2], p, 1, blockSize, (110, 75, 0)))
+            objectList.append(rectObjects.rect(obj[1], obj[2], 1 - p, 1, blockSize, (155, 155, 115)))
+    return objectList
 
 def main():
     print('loading...')
@@ -42,9 +63,9 @@ def main():
 
     # Generate blocks
     blockSize = 64
-    pixelSize = 4
-    blocks = [rectObjects.square(2, 2, 1, blockSize, (128, 128, 128)), 
-              rectObjects.square(3, 2, 1, blockSize, (255, 0, 0))]
+    debugBlocks = [['grass', 1, 1, 1, 1], ['path0', 2, 1, 1, 1], ['pathN', 3, 1], ['pathE', 4, 1]]
+    blocks = [['grass', 1, 1, 1, 1], ['path0', 2, 1, 1, 1], ['pathN', 3, 1], ['pathE', 4, 1]]
+    blocks = addObjects(blocks, blockSize)
     blocks = turnBlocksIntoPygameRects(blocks)
 
     # Player settings
