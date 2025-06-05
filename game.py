@@ -19,6 +19,21 @@ def turnBlocksIntoPygameRects(blocks):
         newBlocks.append(newRect)
     return newBlocks
 
+def convertStringIntoPygameRects(text, x, y, p, c):
+    textCharacters = []
+    textCode = []
+    rectList = []
+    spaceDelay = 0
+    for i in range(len(text)):
+        textCharacters.append(text[i])
+        if text[i] == ' ':
+            spaceDelay -= 4
+        else:
+            textCode.append([text[i], x + i * 6 + spaceDelay, y])
+    rectList = decodeBlocks.decodeText(textCode, p, c)
+    rectList = turnBlocksIntoPygameRects(rectList)
+    return rectList
+
 def main():
     print('loading...')
     pygame.init()
@@ -44,9 +59,12 @@ def main():
     # Generate blocks
     blockSize = 64
     pixelSize = 4
-    blocks = [['grass', 0, 0, 1, 1], ['tottaly not grass', 0, 1, 1, 1]]
+    blocks = [['grass', 1, 0], ['tottaly not grass', 1, 1]]
     blocks = decodeBlocks.decodeBlocks(blocks, blockSize, pixelSize)
     blocks = turnBlocksIntoPygameRects(blocks)
+    text = convertStringIntoPygameRects('A B01', 1, 1, pixelSize, (0, 0, 0))
+    for t in text:
+        blocks.append(t)
 
     # Player settings
     xVelocity = 0
@@ -107,6 +125,8 @@ def main():
         screen.fill(pureWhite)
         for block in blocks:
             pygame.draw.rect(screen, block[1], block[0])
+        for t in text:
+            pygame.draw.rect(screen, t[1], t[0])
         pygame.draw.rect(screen, pureBlack, player)
         pygame.display.flip()
 
@@ -116,5 +136,5 @@ def main():
 
 
 if __name__ == "__main__":
-    print('A TheodoreProductions product')
+    print('A TheodoreProductions™ product')
     main()
