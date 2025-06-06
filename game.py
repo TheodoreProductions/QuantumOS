@@ -62,7 +62,7 @@ def main():
     blocks = [['grass', 1, 0], ['tottaly not grass', 1, 1]]
     blocks = decodeBlocks.decodeBlocks(blocks, blockSize, pixelSize)
     blocks = turnBlocksIntoPygameRects(blocks)
-    text = convertStringIntoPygameRects('A B01', 1, 1, pixelSize, (0, 0, 0))
+    text = convertStringIntoPygameRects('A B01234�', 1, 1, pixelSize, (0, 0, 0))
     for t in text:
         blocks.append(t)
 
