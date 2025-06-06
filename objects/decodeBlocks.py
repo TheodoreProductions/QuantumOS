@@ -60,6 +60,12 @@ def decodeText(textlist, p, c):
             rectlist.append([x * p, y * p, p, 4 * p, c])
             rectlist.append([x * p + p, y * p + 3 * p, 3 * p, p, c])
             rectlist.append([x * p + 4 * p, y * p, p, 7 * p, c])
+        elif text[0] == '5':
+            rectlist.append([x * p, y * p, 5 * p, p, c])
+            rectlist.append([x * p, y * p + p, p, 2 * p, c])
+            rectlist.append([x * p, y * p + 3 * p, 4 * p, p, c])
+            rectlist.append([x * p + 4 * p, y * p + 4 * p, p, 2 * p, c])
+            rectlist.append([x * p, y * p + 6 * p, 4 * p, p, c])
         else:
             rectlist.append([x * p, y * p, 3 * p, 4 * p, (0, 0, 0)])
             rectlist.append([x * p + 3 * p, y * p, 2 * p, 4 * p, (255, 0, 255)])
