@@ -1,3 +1,0 @@
-([('The blank window... or is it?',
-   '/Users/theodore/code/QuantumOs/dist/The blank window... or is it?',
-   'EXECUTABLE')],)
