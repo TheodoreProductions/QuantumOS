@@ -15,27 +15,29 @@ def turnBlocksIntoPygameRects(blocks):
     return newBlocks
 
 def convertStringIntoPygameRects(text, x, y, p, c):
-    textCharacters = []
     textCode = []
     rectList = []
-    spaceDelay = 0
-    verticalDelay = 0
-    for i in range(len(text)):
-        textCharacters.append(text[i])
-        if text[i] == ' ':
-            spaceDelay -= 4
-        elif text[i] == '\n':
-            verticalDelay += 8
-            spaceDelay = -6
-        else:
-            textCode.append([text[i], x + spaceDelay, y + verticalDelay])
-        spaceDelay += 6
+    for t in text:
+        spaceDelay = 0
+        verticalDelay = 0
+        for i in range(len(t[0])):
+            if t[0][i] == ' ':
+                spaceDelay -= 4
+            elif t[0][i] == '\n':
+                verticalDelay += 8
+                spaceDelay = -6
+            else:
+                textCode.append([t[0][i], t[1] + spaceDelay, t[2] + verticalDelay])
+            spaceDelay += 6
     rectList = decodeObjects.decodeText(textCode, p, c)
     rectList = turnBlocksIntoPygameRects(rectList)
     return rectList
 
 def main():
     pygame.init()
+
+    # Debug
+    debug = True
 
     # Colors
     pureWhite = (255, 255, 255)
@@ -55,18 +57,30 @@ def main():
     pixelSize = 4
 
     # Blocks
-    blocks = [['grass', 0, 3], ['replacement texture', 1, 3]]
+    debugBlocks = [['grass', 0, 3], ['replacement texture', 1, 3]]
+    if debug:
+        blocks = debugBlocks
+    else:
+        blocks = []
     blocks = decodeObjects.decodeBlocks(blocks, blockSize, pixelSize)
     blocks = turnBlocksIntoPygameRects(blocks)
 
     # Borders
-    borders = [['n', 0, 4], ['e', 1, 4], ['s', 2, 4], ['w', 3, 4], ['1', 4, 4], ['2', 5, 4], ['3', 6, 4], 
-               ['4', 7, 4]]
+    debugBorders = [['n', 0, 4], ['e', 1, 4], ['s', 2, 4], ['w', 3, 4], ['1', 4, 4], ['2', 5, 4], ['3', 6, 4], 
+                    ['4', 7, 4]]
+    if debug:
+        borders = debugBorders
+    else:
+        borders = []
     borders = decodeObjects.decodeBorders(borders, blockSize, pixelSize)
     borders = turnBlocksIntoPygameRects(borders)
 
     # Text
-    text = '''A BCDEFGHIJKLMNOPQRSTUVWXYZ\na bcdefghijklmnopqrstuvwxyz\n0 123456789\n. ,!?:;'"()[]/\\|{-}_=+@#$%^&*\n�'''
+    debugText = [['''A BCDEFGHIJKLMNOPQRSTUVWXYZ\na bcdefghijklmnopqrstuvwxyz\n0 123456789\n. ,!?()[]{-}_=+@#$%^&*/\\|<>\n�''', 1, 1]]
+    if debug:
+        text = debugText
+    else:
+        text = ''
     text = convertStringIntoPygameRects(text, 1, 1, pixelSize, (0, 0, 0))
     for t in text:
         blocks.append(t)
@@ -76,8 +90,8 @@ def main():
     # Player settings
     xVelocity = 0
     yVelocity = 0
-    speed = 0.3
-    frictionSpeed = 0.5
+    speed = 0.6
+    frictionSpeed = 0.3
 
     player = pygame.Rect((width / 2) - 25, (height / 2) - 25, blockSize, blockSize)
 
@@ -96,15 +110,14 @@ def main():
                 xVelocity += speed
         elif keys[pygame.K_RIGHT]:
             xVelocity -= speed
-        else:
-            if xVelocity > 0:
-                xVelocity -= frictionSpeed
-                if xVelocity < 0:  # Prevents overshooting below zero
-                    xVelocity = 0
-            elif xVelocity < 0:
-                xVelocity += frictionSpeed
-                if xVelocity > 0:  # Prevents overshooting above zero
-                    xVelocity = 0
+        if xVelocity > 0:
+            xVelocity -= frictionSpeed
+            if xVelocity < 0:  # Prevents overshooting below zero
+                xVelocity = 0
+        elif xVelocity < 0:
+            xVelocity += frictionSpeed
+            if xVelocity > 0:  # Prevents overshooting above zero
+                xVelocity = 0
 
         # ---------------------------------------------------------------------------------
 
@@ -112,15 +125,14 @@ def main():
             yVelocity += speed
         elif keys[pygame.K_DOWN]:
             yVelocity -= speed
-        else:
-            if yVelocity > 0:
-                yVelocity -= frictionSpeed
-                if yVelocity < 0:  # Prevents overshooting below zero
-                    yVelocity = 0
-            elif yVelocity < 0:
-                yVelocity += frictionSpeed
-                if yVelocity > 0:  # Prevents overshooting above zero
-                    yVelocity = 0
+        if yVelocity > 0:
+            yVelocity -= frictionSpeed
+            if yVelocity < 0:  # Prevents overshooting below zero
+                yVelocity = 0
+        elif yVelocity < 0:
+            yVelocity += frictionSpeed
+            if yVelocity > 0:  # Prevents overshooting above zero
+                yVelocity = 0
 
         for block in blocks:
             # Apply movement
