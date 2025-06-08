@@ -59,6 +59,10 @@ def decodeText(textlist, p, c):
             rectlist.append([x * p, y * p + 6 * p, 4 * p, p, c])
             rectlist.append([x * p + 4 * p, y * p + p, p, 2 * p, c])
             rectlist.append([x * p + 4 * p, y * p + 4 * p, p, 2 * p, c])
+        elif text[0] == 'C':
+            rectlist.append([x * p + p, y * p, 4 * p, p, c])
+            rectlist.append([x * p, y * p + p, p, 5 * p, c])
+            rectlist.append([x * p + p, y * p + 6 * p, 4 * p, p, c])
         elif text[0] == 'N':
             rectlist.append([x * p, y * p, p, 7 * p, c])
             rectlist.append([x * p + 4 * p, y * p, p, 7 * p, c])

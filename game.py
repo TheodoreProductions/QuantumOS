@@ -1,7 +1,7 @@
 import pygame
 import sys
 
-from objects import decodeBlocks
+from objects import decodeObjects
 
 def do_nothing():
     a = 0
@@ -30,7 +30,7 @@ def convertStringIntoPygameRects(text, x, y, p, c):
         else:
             textCode.append([text[i], x + spaceDelay, y + verticalDelay])
         spaceDelay += 6
-    rectList = decodeBlocks.decodeText(textCode, p, c)
+    rectList = decodeObjects.decodeText(textCode, p, c)
     rectList = turnBlocksIntoPygameRects(rectList)
     return rectList
 
@@ -56,13 +56,13 @@ def main():
 
     # Blocks
     blocks = [['grass', 0, 3], ['replacement texture', 1, 3]]
-    blocks = decodeBlocks.decodeBlocks(blocks, blockSize, pixelSize)
+    blocks = decodeObjects.decodeBlocks(blocks, blockSize, pixelSize)
     blocks = turnBlocksIntoPygameRects(blocks)
 
     # Borders
     borders = [['n', 0, 4], ['e', 1, 4], ['s', 2, 4], ['w', 3, 4], ['1', 4, 4], ['2', 5, 4], ['3', 6, 4], 
                ['4', 7, 4]]
-    borders = decodeBlocks.decodeBorders(borders, blockSize, pixelSize)
+    borders = decodeObjects.decodeBorders(borders, blockSize, pixelSize)
     borders = turnBlocksIntoPygameRects(borders)
 
     # Text
