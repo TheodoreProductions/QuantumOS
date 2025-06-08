@@ -12,6 +12,34 @@ def decodeBlocks(blockList, b, p):
             rectlist.append([x * b + b // 2, y * b + b // 2, b // 2, b // 2, (0, 0, 0)])
     return rectlist
 
+def decodeBorders(borderList, b, p):
+    rectlist = []
+    for border in borderList:
+        x = border[1]
+        y = border[2]
+        if border[0] == 'n':
+            rectlist.append([x * b, y * b, b, p, (0, 0, 0)])
+        elif border[0] == 'e':
+            rectlist.append([x * b + b - p, y * b, p, b, (0, 0, 0)])
+        elif border[0] == 's':
+            rectlist.append([x * b, y * b + b - p, b, p, (0, 0, 0)])
+        elif border[0] == 'w':
+            rectlist.append([x * b, y * b, p, b, (0, 0, 0)])
+        elif border[0] == '1':
+            rectlist.append([x * b, y * b, p, p, (0, 0, 0)])
+        elif border[0] == '2':
+            rectlist.append([x * b + b - p, y * b, p, p, (0, 0, 0)])
+        elif border[0] == '3':
+            rectlist.append([x * b, y * b + b - p, p, p, (0, 0, 0)])
+        elif border[0] == '4':
+            rectlist.append([x * b + b - p, y * b + b - p, p, p, (0, 0, 0)])
+        else:
+            rectlist.append([x * b, y * b, b // 2, b // 2, (0, 0, 0)])
+            rectlist.append([x * b + b // 2, y * b, b // 2, b // 2, (255, 0, 255)])
+            rectlist.append([x * b, y * b + b // 2, b // 2, b // 2, (255, 0, 255)])
+            rectlist.append([x * b + b // 2, y * b + b // 2, b // 2, b // 2, (0, 0, 0)])
+    return rectlist
+
 def decodeText(textlist, p, c):
     rectlist = []
     for text in textlist:
@@ -31,6 +59,34 @@ def decodeText(textlist, p, c):
             rectlist.append([x * p, y * p + 6 * p, 4 * p, p, c])
             rectlist.append([x * p + 4 * p, y * p + p, p, 2 * p, c])
             rectlist.append([x * p + 4 * p, y * p + 4 * p, p, 2 * p, c])
+        elif text[0] == 'N':
+            rectlist.append([x * p, y * p, p, 7 * p, c])
+            rectlist.append([x * p + 4 * p, y * p, p, 7 * p, c])
+            rectlist.append([x * p + p, y * p + 2 * p, p, p, c])
+            rectlist.append([x * p + 2 * p, y * p + 3 * p, p, p, c])
+            rectlist.append([x * p + 3 * p, y * p + 4 * p, p, p, c])
+        elif text[0] == 'P':
+            rectlist.append([x * p, y * p, p, 7 * p, c])
+            rectlist.append([x * p + p, y * p, 3 * p, p, c])
+            rectlist.append([x * p + 4 * p, y * p + p, p, 2 * p, c])
+            rectlist.append([x * p + p, y * p + 3 * p, 3 * p, p, c])
+        elif text[0] == 'S':
+            rectlist.append([x * p + p, y * p, 4 * p, p, c])
+            rectlist.append([x * p, y * p + p, p, 2 * p, c])
+            rectlist.append([x * p + p, y * p + 3 * p, 3 * p, p, c])
+            rectlist.append([x * p + 4 * p, y * p + 4 * p, p, 2 * p, c])
+            rectlist.append([x * p, y * p + 6 * p, 4 * p, p, c])
+        elif text[0] == 'b':
+            rectlist.append([x * p, y * p, p, 7 * p, c])
+            rectlist.append([x * p + p, y * p + 3 * p, 3 * p, p, c])
+            rectlist.append([x * p + 4 * p, y * p + 4 * p, p, 2 * p, c])
+            rectlist.append([x * p + p, y * p + 6 * p, 3 * p, p, c])
+        elif text[0] == 's':
+            rectlist.append([x * p + p, y * p + 2 * p, 2 * p, p, c])
+            rectlist.append([x * p, y * p + 3 * p, p, p, c])
+            rectlist.append([x * p + p, y * p + 4 * p, p, p, c])
+            rectlist.append([x * p + 2 * p, y * p + 5 * p, p, p, c])
+            rectlist.append([x * p, y * p + 6 * p, 2 * p, p, c])
         elif text[0] == '0':
             rectlist.append([x * p + p, y * p, 3 * p, p, c])
             rectlist.append([x * p + p, y * p + 6 * p, 3 * p, p, c])
@@ -66,9 +122,31 @@ def decodeText(textlist, p, c):
             rectlist.append([x * p, y * p + 3 * p, 4 * p, p, c])
             rectlist.append([x * p + 4 * p, y * p + 4 * p, p, 2 * p, c])
             rectlist.append([x * p, y * p + 6 * p, 4 * p, p, c])
+        elif text[0] == '6':
+            rectlist.append([x * p + p, y * p, 3 * p, p, c])
+            rectlist.append([x * p, y * p + p, p, 5 * p, c])
+            rectlist.append([x * p + p, y * p + 3 * p, 3 * p, p, c])
+            rectlist.append([x * p + p, y * p + 6 * p, 3 * p, p, c])
+            rectlist.append([x * p + 4 * p, y * p + 4 * p, p, 2 * p, c])
+        elif text[0] == '7':
+            rectlist.append([x * p, y * p, 5 * p, p, c])
+            rectlist.append([x * p + 4 * p, y * p + p, p, 6 * p, c])
+        elif text[0] == '8':
+            rectlist.append([x * p + p, y * p, 3 * p, p, c])
+            rectlist.append([x * p, y * p + p, p, 2 * p, c])
+            rectlist.append([x * p + 4 * p, y * p + p, p, 2 * p, c])
+            rectlist.append([x * p + p, y * p + 3 * p, 3 * p, p, c])
+            rectlist.append([x * p, y * p + 4 * p, p, 2 * p, c])
+            rectlist.append([x * p + 4 * p, y * p + 4 * p, p, 2 * p, c])
+            rectlist.append([x * p + p, y * p + 6 * p, 3 * p, p, c])
+        elif text[0] == '9':
+            rectlist.append([x * p + p, y * p, 3 * p, p, c])
+            rectlist.append([x * p, y * p + p, p, 2 * p, c])
+            rectlist.append([x * p + p, y * p + 3 * p, 3 * p, p, c])
+            rectlist.append([x * p + 4 * p, y * p + p, p, 6 * p, c])
         else:
-            rectlist.append([x * p, y * p, 3 * p, 4 * p, (0, 0, 0)])
+            rectlist.append([x * p, y * p, 3 * p, 4 * p, c])
             rectlist.append([x * p + 3 * p, y * p, 2 * p, 4 * p, (255, 0, 255)])
             rectlist.append([x * p, y * p + 4 * p, 3 * p, 3 * p, (255, 0, 255)])
-            rectlist.append([x * p + 3 * p, y * p + 4 * p, 2 * p, 3 * p, (0, 0, 0)])
+            rectlist.append([x * p + 3 * p, y * p + 4 * p, 2 * p, 3 * p, c])
     return rectlist
