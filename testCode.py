@@ -10,5 +10,6 @@ def main():
     else:
         print(b[1])
     print(b[2])
+
 if __name__ == "__main__":
     main()
