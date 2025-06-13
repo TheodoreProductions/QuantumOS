@@ -1,3 +1,10 @@
+# source pygame-env/bin/activate
+# -m venv pyinstaller-env
+# source pyinstaller-env/bin/activate
+# pip install pyinstaller
+# pyinstaller --onefile --name "Game" game.py
+# and then zip it
+
 import pygame
 import sys
 
