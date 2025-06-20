@@ -1,14 +1,12 @@
-# source pygame-env/bin/activate
-# -m venv pyinstaller-env
-# source pyinstaller-env/bin/activate
-# pip install pyinstaller
-# pyinstaller --onefile --name "Game" game.py
-# and then zip it
+# run 'source pygame-env/bin/activate'
 
 import pygame
 import sys
 
-from objects import decodeObjects
+from decode import decodeBlocks
+from decode import decodeText
+from decode import decodeBorders
+from decode import decodeBarriers
 
 def do_nothing():
     a = 0
@@ -21,7 +19,7 @@ def turnBlocksIntoPygameRects(blocks):
         newBlocks.append(newRect)
     return newBlocks
 
-def convertStringIntoPygameRects(text, x, y, p, c):
+def convertStringIntoPygameRects(text, x, y, p):
     textCode = []
     rectList = []
     for t in text:
@@ -34,14 +32,16 @@ def convertStringIntoPygameRects(text, x, y, p, c):
                 verticalDelay += 8
                 spaceDelay = -6
             else:
-                textCode.append([t[0][i], t[1] + spaceDelay, t[2] + verticalDelay])
+                textCode.append([t[0][i], t[1] + spaceDelay, t[2] + verticalDelay, t[3]])
             spaceDelay += 6
-    rectList = decodeObjects.decodeText(textCode, p, c)
+    rectList = decodeText.run(textCode, p)
     rectList = turnBlocksIntoPygameRects(rectList)
     return rectList
 
 def main():
     pygame.init()
+
+    print('Please wait, the game is loading...')
 
     # Debug
     debug = True
@@ -53,15 +53,11 @@ def main():
     pureGreen = (0, 255, 0)
     pureBlue = (0, 0, 255)
 
-    width, height = 1000, 1000
+    width, height = 1024, 1024
 
     # Screen settings
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption("The blank window... or is it?")
-
-    # Generate blocks
-    blockSize = 64
-    pixelSize = 4
 
     # Blocks
     debugBlocks = [['grass', 0, 3], ['replacement texture', 1, 3]]
@@ -69,26 +65,35 @@ def main():
         blocks = debugBlocks
     else:
         blocks = []
-    blocks = decodeObjects.decodeBlocks(blocks, blockSize, pixelSize)
+    blocks = decodeBlocks.run(blocks, 64, 4)
     blocks = turnBlocksIntoPygameRects(blocks)
 
+    # Barriers
+    debugBarriers = [[0, 5]]
+    if debug:
+        barriers = debugBarriers
+    else:
+        barriers = []
+    barriers = decodeBarriers.run(barriers, 64, 4)
+
     # Borders
-    debugBorders = [['n', 0, 4], ['e', 1, 4], ['s', 2, 4], ['w', 3, 4], ['1', 4, 4], ['2', 5, 4], ['3', 6, 4], 
-                    ['4', 7, 4]]
+    debugBorders = [['n', 0, 4, pureBlack], ['e', 1, 4, pureBlack], ['s', 2, 4, pureBlack], 
+                    ['w', 3, 4, pureBlack], ['1', 4, 4, pureBlack], ['2', 5, 4, pureBlack], 
+                    ['3', 6, 4, pureBlack], ['4', 7, 4, pureBlack]]
     if debug:
         borders = debugBorders
     else:
         borders = []
-    borders = decodeObjects.decodeBorders(borders, blockSize, pixelSize)
+    borders = decodeBorders.run(borders, 64, 4)
     borders = turnBlocksIntoPygameRects(borders)
 
     # Text
-    debugText = [['''A BCDEFGHIJKLMNOPQRSTUVWXYZ\na bcdefghijklmnopqrstuvwxyz\n0 123456789\n. ,!?()[]{-}_=+@#$%^&*/\\|<>\n�''', 1, 1]]
+    debugText = [['''A BCDEFGHIJKLMNOPQRSTUVWXYZ\na bcdefghijklmnopqrstuvwxyz\n0 123456789\n. ,!?()[]{-}_=+@#$%^&*/\\|<>\n�''', 1, 1, (0, 0, 0)]]
     if debug:
         text = debugText
     else:
         text = ''
-    text = convertStringIntoPygameRects(text, 1, 1, pixelSize, (0, 0, 0))
+    text = convertStringIntoPygameRects(text, 1, 1, 4)
     for t in text:
         blocks.append(t)
     for border in borders:
@@ -97,10 +102,10 @@ def main():
     # Player settings
     xVelocity = 0
     yVelocity = 0
-    speed = 0.6
-    frictionSpeed = 0.3
+    speed = 6
+    frictionSpeed = 3
 
-    player = pygame.Rect((width / 2) - 25, (height / 2) - 25, blockSize, blockSize)
+    player = pygame.Rect((width / 2) - 25, (height / 2) - 25, 64, 64)
 
     # Game loop
     running = True
@@ -110,11 +115,12 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+                print('Thank you for using an TheodoreProductions™ project. We hope to see you again!')
 
         # Movement
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
-                xVelocity += speed
+            xVelocity += speed
         elif keys[pygame.K_RIGHT]:
             xVelocity -= speed
         if xVelocity > 0:
@@ -143,8 +149,8 @@ def main():
 
         for block in blocks:
             # Apply movement
-            block[0].x += xVelocity
-            block[0].y += yVelocity
+            block[0].x += xVelocity // 10
+            block[0].y += yVelocity // 10
 
         # Drawing
         screen.fill(pureWhite)
