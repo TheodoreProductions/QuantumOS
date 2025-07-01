@@ -113,6 +113,10 @@ def main():
             update = True
             
         if update:
+            # ----------------------
+            # -----Moving rects-----
+            # ----------------------
+
             # Blocks
             debugBlocks = [['grass', 0, 3], ['replacement texture', 1, 3]]
             if debug:
@@ -161,8 +165,13 @@ def main():
             frictionSpeed = 3
             x = 7.5 * 64 * 64 * 10
             y = 7.5 * 64 * 64 * 10
-            
+
+            # Combine them all
             movingRects = addLists([blocks, text, barriers])
+
+            # --------------------------
+            # -----Stationary rects-----
+            # --------------------------
 
             # Update update :)
             update = False
@@ -204,7 +213,6 @@ def main():
                 yVelocity = 0
 
         for rect in movingRects:
-            print(rect[0])
             # Apply movement
             rect[0].x += xVelocity // 10
             rect[0].y += yVelocity // 10
