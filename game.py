@@ -87,18 +87,6 @@ def main():
         keys = pygame.key.get_pressed()
 
         # Detect updates
-        if keys[pygame.K_s]:
-            print('\n\nGame paused.')
-
-            debug = input('Turn debug on? (y/n)\n--> ')
-            debug.strip()
-            if debug == 'y':
-                debug = True
-            else:
-                debug = False
-
-            print('Game resumed.')
-            update = True
         if keys[pygame.K_1]:
             debug = True
             update = True
@@ -141,7 +129,7 @@ def main():
                     barrierPositions = barriers
                 else:
                     barriers = []
-            if debug or showBarriers:
+            if showBarriers:
                 barriers = decodeBarriers.run(barriers, 64, 4)
                 barriers = turnBlocksIntoPygameRects(barriers)
             else:
