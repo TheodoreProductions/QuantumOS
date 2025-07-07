@@ -75,9 +75,6 @@ def main():
     debug = False
     showBarriers = False
 
-    # Create player
-    player = pygame.Rect((width / 2) - 32, (height / 2) - 32, 64, 64)
-
     # Game loop
     running = True
     while running:
@@ -106,7 +103,7 @@ def main():
             # ----------------------
 
             # Blocks
-            debugBlocks = [['grass', 0, 3], ['replacement texture', 1, 3]]
+            debugBlocks = [['grass', 0, 3], ['replacement texture', 1, 3], ['grid', 2, 3]]
             if debug:
                 blocks = debugBlocks
             else:
@@ -146,6 +143,20 @@ def main():
                     text = []
             text = convertStringIntoPygameRects(text, 1, 1, 4)
 
+            # Combine them all
+            movingRects = addLists([blocks, text, barriers])
+
+            # --------------------------
+            # -----Stationary rects-----
+            # --------------------------
+
+            # Define player
+            playerRect = pygame.Rect((width / 2) - 32, (height / 2) - 32, 64, 64)
+            player = [[playerRect, pureBlack]]
+
+            # Combine them all
+            stationaryRects = addLists([player])
+
             # Player settings
             xVelocity = 0
             yVelocity = 0
@@ -154,22 +165,23 @@ def main():
             x = 7.5 * 64 * 64 * 10
             y = 7.5 * 64 * 64 * 10
 
-            # Combine them all
-            movingRects = addLists([blocks, text, barriers])
-
-            # --------------------------
-            # -----Stationary rects-----
-            # --------------------------
-
             # Update update :)
             update = False
 
-        # -----------------------------
+        # ------------------------
+        # -----Quit Detection-----
+        # ------------------------
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
                 print('\n\nThank you for using an TheodoreProductions™ project. We hope to see you again!\n\n')
+                # \n \n Thank you for using an TheodoreProductions™ project. We hope to see 
+                # you again! \n \n
+
+        # ------------------
+        # -----Movement-----
+        # ------------------
 
         # Movement
         if keys[pygame.K_LEFT]:
@@ -184,8 +196,6 @@ def main():
             xVelocity += frictionSpeed
             if xVelocity > 0:  # Prevents overshooting above zero
                 xVelocity = 0
-
-        # ---------------------------------------------------------------------------------
 
         if keys[pygame.K_UP]:
             yVelocity += speed
@@ -214,9 +224,8 @@ def main():
         screen.fill(pureWhite)
         for rect in movingRects:
             pygame.draw.rect(screen, rect[1], rect[0])
-        for t in text:
-            pygame.draw.rect(screen, t[1], t[0])
-        pygame.draw.rect(screen, pureBlack, player)
+        for rect in stationaryRects:
+            pygame.draw.rect(screen, rect[1], rect[0])
         pygame.display.flip()
 
     # Quit

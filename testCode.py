@@ -15,15 +15,6 @@ def main():
         [blue, 1, 1, 2, 1, 3, 2, 2, 2]
     ]
 
-    polyNum = 0
-    for poly in polygonList:
-        polyIndex = 0
-        for p in poly:
-            if polyIndex != 0:
-                polygonList[polyNum][polyIndex] *= 64
-            polyIndex += 1
-        polyNum += 1
-
     running = True
     while running:
         for event in pygame.event.get():

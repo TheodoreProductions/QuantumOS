@@ -9,7 +9,7 @@ def run(blockList, b, p):
             rectlist.append([x, y, b, p, (0, 0, 0)])
             rectlist.append([x, y, p, b, (0, 0, 0)])
             rectlist.append([x + b - p, y, p, b, (0, 0, 0)])
-            rectlist.append([x , p + b - p, b, p, (0, 0, 0)])
+            rectlist.append([x , y + b - p, b, p, (0, 0, 0)])
         else:
             rectlist.append([x, y, b // 2, b // 2, (0, 0, 0)])
             rectlist.append([x + b // 2, y, b // 2, b // 2, (255, 0, 255)])
