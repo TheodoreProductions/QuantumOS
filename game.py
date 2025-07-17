@@ -45,9 +45,13 @@ def convertStringIntoPygameRects(text, x, y, p):
     return rectList
 
 def main():
+    version = 'develepmont'
+    name = 'sandbox-escape'
+    fullName = name + ' ' + version
+
     pygame.init()
 
-    print('\n\nPlease wait, the game is loading...\n\n')
+    print('\n\nPlease wait, the ' + fullName + ' is loading...\n\n')
 
     # Debug
     debug = True
@@ -61,9 +65,11 @@ def main():
 
     width, height = 1024, 1024
 
+    inc = 0
+
     # Screen settings
     screen = pygame.display.set_mode((width, height))
-    pygame.display.set_caption("The blank window... or is it?")
+    pygame.display.set_caption(fullName)
 
     # Screen num
     screenNum = 0
@@ -73,6 +79,7 @@ def main():
     # Start settings
     update = True
     debug = False
+    printDebugText = False
     showBarriers = False
 
     # Game loop
@@ -162,8 +169,6 @@ def main():
             yVelocity = 0
             speed = 6
             frictionSpeed = 3
-            x = 7.5 * 64 * 64 * 10
-            y = 7.5 * 64 * 64 * 10
 
             # Update update :)
             update = False
@@ -215,17 +220,26 @@ def main():
             rect[0].x += xVelocity // 10
             rect[0].y += yVelocity // 10
 
-        
-        x += xVelocity // 10
-        y += yVelocity // 10
-        print(x // 64 // 64 // 10, y // 64 // 64 // 10)
+        actualRects = 0
+        drawnRects = 0
 
         # Drawing
         screen.fill(pureWhite)
         for rect in movingRects:
+            actualRects += 1
+            if rect[0].x < -50 or rect[0].x > width + 50 or rect[0].y < -50 or rect[0].y > height + 50:
+                continue
             pygame.draw.rect(screen, rect[1], rect[0])
+            drawnRects += 1
         for rect in stationaryRects:
+            actualRects += 1
+            if rect[0].x < -50 or rect[0].x > width + 50 or rect[0].y < -50 or rect[0].y > height + 50:
+                continue
             pygame.draw.rect(screen, rect[1], rect[0])
+            drawnRects += 1
+
+        print(actualRects, drawnRects)
+
         pygame.display.flip()
 
     # Quit

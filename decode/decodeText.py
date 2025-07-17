@@ -27,6 +27,15 @@ def run(textlist, p):
             rectlist.append([x, y, p, 7 * p, c])
             rectlist.append([x, y + 6 * p, 4 * p, p, c])
             rectlist.append([x + 4 * p, y + p, p, 5 * p, c])
+        elif text[0] == 'E':
+            rectlist.append([x, y, 5 * p, p, c])
+            rectlist.append([x, y, p, 7 * p, c])
+            rectlist.append([x, y + 3 * p, 5 * p, p, c])
+            rectlist.append([x, y + 6 * p, 5 * p, p, c])
+        elif text[0] == 'F':
+            rectlist.append([x, y, 5 * p, p, c])
+            rectlist.append([x, y, p, 7 * p, c])
+            rectlist.append([x, y + 3 * p, 5 * p, p, c])
         elif text[0] == 'N':
             rectlist.append([x, y, p, 7 * p, c])
             rectlist.append([x + 4 * p, y, p, 7 * p, c])
