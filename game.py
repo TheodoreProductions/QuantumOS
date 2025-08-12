@@ -7,6 +7,11 @@ from decode import decodeBlocks
 from decode import decodeText
 from decode import decodeBarriers
 
+def version():
+    version = 'develepmont (00000)'
+    name = 'sandbox-escape'
+    return name + ' ' + version
+
 def doNothing():
     a = 0
 
@@ -45,13 +50,11 @@ def convertStringIntoPygameRects(text, x, y, p):
     return rectList
 
 def main():
-    version = 'develepmont'
-    name = 'sandbox-escape'
-    fullName = name + ' ' + version
+    fullName = version()
 
     pygame.init()
 
-    print('\n\nPlease wait, the ' + fullName + ' is loading...\n\n')
+    print('\n\nPlease wait, ' + fullName + ' is loading...\n\n')
 
     # Debug
     debug = True
@@ -110,7 +113,7 @@ def main():
             # ----------------------
 
             # Blocks
-            debugBlocks = [['grass', 0, 3], ['replacement texture', 1, 3], ['grid', 2, 3]]
+            debugBlocks = []
             if debug:
                 blocks = debugBlocks
             else:
@@ -122,22 +125,22 @@ def main():
             blocks = turnBlocksIntoPygameRects(blocks)
 
             # Barriers
-            debugBarriers = [[0, 5]]
+            debugBarriers = '0000000000000000000000000000000000000000000000001'
             debugBarrierPositions = debugBarriers
             if debug:
                 barriers = debugBarriers
                 barrierPositions = debugBarrierPositions
             else:
                 if screenNum == 0:
-                    barriers = [[0, 0], [0, 1]]
+                    barriers = ''
                     barrierPositions = barriers
                 else:
-                    barriers = []
+                    barriers = ''
             if showBarriers:
                 barriers = decodeBarriers.run(barriers, 64, 4)
                 barriers = turnBlocksIntoPygameRects(barriers)
             else:
-                barriers = []
+                barriers = ''
 
             # Text
             debugText = [['''A BCDEFGHIJKLMNOPQRSTUVWXYZ\na bcdefghijklmnopqrstuvwxyz\n0 123456789\n. ,!?()[]{-}_=+@#$%^&*/\\|<>\n�''', 1, 1, (0, 0, 0)]]
@@ -181,8 +184,6 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
                 print('\n\nThank you for using an TheodoreProductions™ project. We hope to see you again!\n\n')
-                # \n \n Thank you for using an TheodoreProductions™ project. We hope to see 
-                # you again! \n \n
 
         # ------------------
         # -----Movement-----
@@ -237,8 +238,6 @@ def main():
                 continue
             pygame.draw.rect(screen, rect[1], rect[0])
             drawnRects += 1
-
-        print(actualRects, drawnRects)
 
         pygame.display.flip()
 
