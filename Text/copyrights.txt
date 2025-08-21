@@ -1,9 +1,16 @@
-EN: the copyrights of this file are strictly held under control of TheodoreProductions. 
-SP: Los derechos de autor de este archivo están estrictamente bajo el control de TheodoreProductions.
-GR: τα πνευματικά δικαιώματα αυτού του αρχείου τηρούνται αυστηρά υπό τον έλεγχο της TheodoreProductions.
-FR: les droits d'auteur de ce fichier sont strictement détenus sous le contrôle de TheodoreProductions.
-HN: इस फ़ाइल के कॉपीराइट पूरी तरह से थियोडोरप्रोडक्शंस के नियंत्रण में हैं।
-KO: 이 파일의 저작권은 TheodoreProductions의 엄격한 관리 하에 있습니다.
-JA: このファイルの著作権は TheodoreProductions によって厳密に管理されています。
-RU: Авторские права на этот файл строго контролируются TheodoreProductions.
-CH: 该文件的版权严格由 TheodoreProductions 控制。
+ABK: Ари афайл акопиатә зинқәа ӷәӷәала TheodoreProductions and co рнапхгара аҵаҟа иҟоуп.
+ACE: Hak cipta nibak file-file nyoe geumat deungon ketat dimiyub kontrol TheodoreProductions dan co.
+ACO: twero pa jami ma ki coyo ni tye i te loc pa TheodoreProductions ki luwote.
+AFA: too faayilitteh koppi raayit digga luk yabbixe Theodore murtisso kee co.
+AFR: Die kopieregte van hierdie lêers word streng onder beheer van TheodoreProductions en kie gehou.
+AKA: Fael yi ho hokwan ahorow no wɔ TheodoreProductions ne ne mfɛfo tumi ase denneennen.
+ALB: Të drejtat e autorit të këtyre skedarëve mbahen nën kontrollin strikt të TheodoreProductions dhe kompanive.
+ALU: Twero pa waraga eni utiye i the loc pa TheodoreProductions man juwadi.
+AMH: የእነዚህ ፋይል የቅጂ መብቶች በጥብቅ በቴዎዶር ፕሮዳክሽን እና ተባባሪ ቁጥጥር ስር ናቸው.
+ARA: تخضع حقوق الطبع والنشر لهذه الملفات لسيطرة صارمة من قبل TheodoreProductions and co.
+ARM: Այս ֆայլերի հեղինակային իրավունքները խստորեն պահպանվում են TheodoreProductions-ի և ընկերության կողմից։
+ASS: এই ফাইলসমূহৰ কপিৰাইটসমূহ কঠোৰভাৱে TheodoreProductions and co ৰ নিয়ন্ত্ৰণত ৰখা হৈছে।
+AVA: Гьел файлазул авторскиял ихтиярал кьварун цӀунун руго TheodoreProductions ва co.
+AWA: इन फाइलन के कॉपीराइट थियोडोरप्रोडक्शंस अऊर सह के नियंत्रण मा सख्ती से रखे जात हैं।
+AYM: Uka archivonakan derechos de autor ukax TheodoreProductions ukat co.
+AZE: Bu faylın müəllif hüquqları ciddi şəkildə TheodoreProductions və co.-nun nəzarəti altındadır.
