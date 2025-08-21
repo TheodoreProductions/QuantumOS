@@ -7,6 +7,8 @@ from decode import decodeBlocks
 from decode import decodeText
 from decode import decodeBarriers
 
+from getData import debugWorldItems
+
 def version():
     version = 'develepmont (00000)'
     name = 'sandbox-escape'
@@ -43,7 +45,7 @@ def convertStringIntoPygameRects(text, x, y, p):
                 verticalDelay += 8
                 spaceDelay = -6
             else:
-                textCode.append([t[0][i], t[1] + spaceDelay, t[2] + verticalDelay, t[3]])
+                textCode.append([t[0][i], t[1] + spaceDelay, t[2] + verticalDelay, t[3], t[4]])
             spaceDelay += 6
     rectList = decodeText.run(textCode, p)
     rectList = turnBlocksIntoPygameRects(rectList)
@@ -113,9 +115,8 @@ def main():
             # ----------------------
 
             # Blocks
-            debugBlocks = []
             if debug:
-                blocks = debugBlocks
+                blocks = debugWorldItems.blocks()
             else:
                 if screenNum == 0:
                     blocks = []
@@ -125,27 +126,23 @@ def main():
             blocks = turnBlocksIntoPygameRects(blocks)
 
             # Barriers
-            debugBarriers = '0000000000000000000000000000000000000000000000001'
-            debugBarrierPositions = debugBarriers
             if debug:
-                barriers = debugBarriers
-                barrierPositions = debugBarrierPositions
+                barriers = debugWorldItems.barriers()
             else:
                 if screenNum == 0:
-                    barriers = ''
+                    barriers = []
                     barrierPositions = barriers
                 else:
-                    barriers = ''
+                    barriers = []
             if showBarriers:
                 barriers = decodeBarriers.run(barriers, 64, 4)
                 barriers = turnBlocksIntoPygameRects(barriers)
             else:
-                barriers = ''
+                barriers = []
 
             # Text
-            debugText = [['''A BCDEFGHIJKLMNOPQRSTUVWXYZ\na bcdefghijklmnopqrstuvwxyz\n0 123456789\n. ,!?()[]{-}_=+@#$%^&*/\\|<>\n�''', 1, 1, (0, 0, 0)]]
             if debug:
-                text = debugText
+                text = debugWorldItems.text()
             else:
                 if screenNum == 0:
                     text = []

@@ -1,9 +1,18 @@
 def run(textlist, p):
     rectlist = []
+    index = 1
     for text in textlist:
+        c = text[3]
+        s = text[4]
+        if index == 1:
+            oldP = p
+            oldS = s
+            p = p * s
+        if s != oldS:
+            oldS = s
+            p = oldP * s
         x = text[1] * p
         y = text[2] * p
-        c = text[3]
         if text[0] == 'A':
             rectlist.append([x + 2 * p, y, p, p, c])
             rectlist.append([x + p, y + p, p, p, c])
@@ -36,6 +45,25 @@ def run(textlist, p):
             rectlist.append([x, y, 5 * p, p, c])
             rectlist.append([x, y, p, 7 * p, c])
             rectlist.append([x, y + 3 * p, 5 * p, p, c])
+        elif text[0] == 'G':
+            rectlist.append([x, y, 5 * p, p, c])
+            rectlist.append([x, y, p, 7 * p, c])
+            rectlist.append([x, y + 6 * p, 5 * p, p, c])
+            rectlist.append([x + 4 * p, y + 3 * p, p, 4 * p, c])
+            rectlist.append([x + 3 * p, y + 3 * p, 2 * p, p, c])
+        elif text[0] == 'H':
+            rectlist.append([x, y, p, 7 * p, c])
+            rectlist.append([x + 4 * p, y, p, 7 * p, c])
+            rectlist.append([x, y + 3 * p, 5 * p, p, c])
+        elif text[0] == 'I':
+            rectlist.append([x, y, 5 * p, p, c])
+            rectlist.append([x + 2 * p, y, p, 7 * p, c])
+            rectlist.append([x, y + 6 * p, 5 * p, p, c])
+        elif text[0] == 'J':
+            rectlist.append([x, y, 5 * p, p, c])
+            rectlist.append([x + 2 * p, y, p, 6 * p, c])
+            rectlist.append([x, y + 5 * p, p, p, c])
+            rectlist.append([x + p, y + 6 * p, p, p, c])
         elif text[0] == 'N':
             rectlist.append([x, y, p, 7 * p, c])
             rectlist.append([x + 4 * p, y, p, 7 * p, c])
@@ -126,4 +154,6 @@ def run(textlist, p):
             rectlist.append([x + 3 * p, y, 2 * p, 4 * p, (255, 0, 255)])
             rectlist.append([x, y + 4 * p, 3 * p, 3 * p, (255, 0, 255)])
             rectlist.append([x + 3 * p, y + 4 * p, 2 * p, 3 * p, c])
+
+        index += 1
     return rectlist
