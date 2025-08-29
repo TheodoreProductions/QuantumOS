@@ -6,6 +6,7 @@ import sys
 from decode import decodeBlocks
 from decode import decodeText
 from decode import decodeBarriers
+from decode import decodePlayer
 
 from getData import debugWorldItems
 
@@ -158,8 +159,10 @@ def main():
             # --------------------------
 
             # Define player
-            playerRect = pygame.Rect((width / 2) - 32, (height / 2) - 32, 64, 64)
-            player = [[playerRect, pureBlack]]
+            x = 0
+            y = 0
+            player = decodePlayer.run(x, y, 4)
+            player = turnBlocksIntoPygameRects(player)
 
             # Combine them all
             stationaryRects = addLists([player])
@@ -223,15 +226,17 @@ def main():
 
         # Drawing
         screen.fill(pureWhite)
+        limit = 64
+        nLimit = int('-' + str(limit))
         for rect in movingRects:
             actualRects += 1
-            if rect[0].x < -50 or rect[0].x > width + 50 or rect[0].y < -50 or rect[0].y > height + 50:
+            if rect[0].x < nLimit or rect[0].x > width + limit or rect[0].y < nLimit or rect[0].y > height + limit:
                 continue
             pygame.draw.rect(screen, rect[1], rect[0])
             drawnRects += 1
         for rect in stationaryRects:
             actualRects += 1
-            if rect[0].x < -50 or rect[0].x > width + 50 or rect[0].y < -50 or rect[0].y > height + 50:
+            if rect[0].x < nLimit or rect[0].x > width + limit or rect[0].y < nLimit or rect[0].y > height + limit:
                 continue
             pygame.draw.rect(screen, rect[1], rect[0])
             drawnRects += 1

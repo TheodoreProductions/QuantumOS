@@ -64,12 +64,35 @@ def run(textlist, p):
             rectlist.append([x + 2 * p, y, p, 6 * p, c])
             rectlist.append([x, y + 5 * p, p, p, c])
             rectlist.append([x + p, y + 6 * p, p, p, c])
+        elif text[0] == 'K':
+            rectlist.append([x, y, p, 7 * p, c])
+            rectlist.append([x, y + 3 * p, 2 * p, p, c])
+            rectlist.append([x + 4 * p, y, p, p, c])
+            rectlist.append([x + 3 * p, y + p, p, p, c])
+            rectlist.append([x + 2 * p, y + 2 * p, p, p, c])
+            rectlist.append([x + 2 * p, y + 4 * p, p, p, c])
+            rectlist.append([x + 3 * p, y + 5 * p, p, p, c])
+            rectlist.append([x + 4 * p, y + 6 * p, p, p, c])
+        elif text[0] == 'L':
+            rectlist.append([x, y, p, 7 * p, c])
+            rectlist.append([x, y + 6 * p, 5 * p, p, c])
+        elif text[0] == 'M':
+            rectlist.append([x, y, p, 7 * p, c])
+            rectlist.append([x + p, y + p, p, p, c])
+            rectlist.append([x + 2 * p, y + 2 * p, p, p, c])
+            rectlist.append([x + 3 * p, y + p, p, p, c])
+            rectlist.append([x + 4 * p, y, p, 7 * p, c])
         elif text[0] == 'N':
             rectlist.append([x, y, p, 7 * p, c])
             rectlist.append([x + 4 * p, y, p, 7 * p, c])
             rectlist.append([x + p, y + 2 * p, p, p, c])
             rectlist.append([x + 2 * p, y + 3 * p, p, p, c])
             rectlist.append([x + 3 * p, y + 4 * p, p, p, c])
+        elif text[0] == 'O':
+            rectlist.append([x + p, y, 3 * p, p, c])
+            rectlist.append([x, y + p, p, 5 * p, c])
+            rectlist.append([x + p, y + 6 * p, 3 * p, p, c])
+            rectlist.append([x + 4 * p, y + p, p, 5 * p, c])
         elif text[0] == 'P':
             rectlist.append([x, y, p, 7 * p, c])
             rectlist.append([x + p, y, 3 * p, p, c])
