@@ -241,6 +241,8 @@ def main():
             pygame.draw.rect(screen, rect[1], rect[0])
             drawnRects += 1
 
+        print(actualRects, drawnRects)
+
         pygame.display.flip()
 
     # Quit
