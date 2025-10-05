@@ -1,5 +1,3 @@
-# run 'source pygame-env/bin/activate'
-
 import pygame
 import sys
 
@@ -8,10 +6,11 @@ from decode import decodeText
 from decode import decodeBarriers
 from decode import decodePlayer
 
-from getData import debugWorldItems
+from getData import worldItems
 
 def version():
-    version = 'develepmont (00000)'
+    # maj.med.min.bug vernum
+    version = '0.0.2.0 00002'
     name = 'sandbox-escape'
     return name + ' ' + version
 
@@ -87,6 +86,7 @@ def main():
     debug = False
     printDebugText = False
     showBarriers = False
+    showPlayer = False
 
     # Game loop
     running = True
@@ -96,19 +96,18 @@ def main():
         # Detect keys
         keys = pygame.key.get_pressed()
 
-        # Detect updates
-        if keys[pygame.K_1]:
-            debug = True
-            update = True
-        if keys[pygame.K_2]:
-            debug = False
-            update = True
-        if keys[pygame.K_3]:
-            showBarriers = True
-            update = True
-        if keys[pygame.K_4]:
-            showBarriers = False
-            update = True
+        # if keys[pygame.K_1]:
+        #     debug = True
+        #     update = True
+        # if keys[pygame.K_2]:
+        #     debug = False
+        #     update = True
+        # if keys[pygame.K_3]:
+        #     showBarriers = True
+        #     update = True
+        # if keys[pygame.K_4]:
+        #     showBarriers = False
+        #     update = True
             
         if update:
             # ----------------------
@@ -117,7 +116,7 @@ def main():
 
             # Blocks
             if debug:
-                blocks = debugWorldItems.blocks()
+                blocks = worldItems.blocks('1')
             else:
                 if screenNum == 0:
                     blocks = []
@@ -128,7 +127,7 @@ def main():
 
             # Barriers
             if debug:
-                barriers = debugWorldItems.barriers()
+                barriers = worldItems.barriers('1')
             else:
                 if screenNum == 0:
                     barriers = []
@@ -143,7 +142,7 @@ def main():
 
             # Text
             if debug:
-                text = debugWorldItems.text()
+                text = worldItems.text('1')
             else:
                 if screenNum == 0:
                     text = []
@@ -159,13 +158,16 @@ def main():
             # --------------------------
 
             # Define player
-            x = 0
-            y = 0
+            x = width // 2 - 20
+            y = height // 2 - 30
             player = decodePlayer.run(x, y, 4)
             player = turnBlocksIntoPygameRects(player)
 
             # Combine them all
-            stationaryRects = addLists([player])
+            if showPlayer:
+                stationaryRects = addLists([player])
+            else:
+                stationaryRects = []
 
             # Player settings
             xVelocity = 0
@@ -241,14 +243,15 @@ def main():
             pygame.draw.rect(screen, rect[1], rect[0])
             drawnRects += 1
 
-        print(actualRects, drawnRects)
+        # print(actualRects, drawnRects)
 
+        # Update display
         pygame.display.flip()
 
     # Quit
     pygame.quit()
     sys.exit()
 
-
+# Normal stuff
 if __name__ == "__main__":
     main()
