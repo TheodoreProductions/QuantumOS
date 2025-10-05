@@ -1,0 +1,13 @@
+[project]
+name = "quantumos"
+version = "0.0.0"
+description = "A TheodoreProductions™ quantum operating system with pygame-based sandbox escape game"
+requires-python = ">=3.8"
+dependencies = [
+    "pygame>=2.6.1",
+]
+
+[project.scripts]
+quantumos = "MainOS:main"
+sandbox-escape = "sandboxescape:main"
+test-3d = "testCode:main"
