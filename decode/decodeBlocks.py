@@ -5,7 +5,6 @@ def run(blockList, b, p):
         y = block[2] * b
         name = block[0]
         if 1==2:
-            #fdsaf
             a=23241312
         else:
             rectlist.append([x, y, b // 2, b // 2, (0, 0, 0)])

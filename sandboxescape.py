@@ -77,13 +77,13 @@ def main():
     pygame.display.set_caption(fullName)
 
     # Screen num
-    screenNum = 0
+    screenNum = 'debug'
 
     # 0 = map
 
     # Start settings
     update = True
-    debug = False
+    debug = True
     printDebugText = False
     showBarriers = False
     showPlayer = False
@@ -116,24 +116,19 @@ def main():
 
             # Blocks
             if debug:
-                blocks = worldItems.blocks('1')
+                blocks = worldItems.blocks('debug')
             else:
-                if screenNum == 0:
-                    blocks = []
-                else:
-                    blocks = []
+                blocks = worldItems.blocks(screenNum)
+            
             blocks = decodeBlocks.run(blocks, 64, 4)
             blocks = turnBlocksIntoPygameRects(blocks)
 
             # Barriers
             if debug:
-                barriers = worldItems.barriers('1')
+                barriers = worldItems.barriers('debug')
             else:
-                if screenNum == 0:
-                    barriers = []
-                    barrierPositions = barriers
-                else:
-                    barriers = []
+                barriers = worldItems.barriers(screenNum)
+            
             if showBarriers:
                 barriers = decodeBarriers.run(barriers, 64, 4)
                 barriers = turnBlocksIntoPygameRects(barriers)
@@ -142,12 +137,10 @@ def main():
 
             # Text
             if debug:
-                text = worldItems.text('1')
+                text = worldItems.text('debug')
             else:
-                if screenNum == 0:
-                    text = []
-                else:
-                    text = []
+                text = worldItems.text(screenNum)
+                
             text = convertStringIntoPygameRects(text, 1, 1, 4)
 
             # Combine them all

@@ -10,4 +10,4 @@ dependencies = [
 [project.scripts]
 quantumos = "MainOS:main"
 sandbox-escape = "sandboxescape:main"
-test-3d = "testCode:main"
+test-code = "testCode:main"
