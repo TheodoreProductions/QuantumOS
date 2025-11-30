@@ -122,8 +122,8 @@ def run(textlist, p):
             rectlist.append([x + 4 * p, y + 4 * p, p, 2 * p, c])
             rectlist.append([x, y + 6 * p, 4 * p, p, c])
         elif text[0] == 'T':
-            rectlist.append([x, y, 4 * p, 6 * p, c])
-            rectlist.append([x + 2 * p, y, p, 6 * p, c])
+            rectlist.append([x, y, 5 * p, p, c])
+            rectlist.append([x + 2 * p, y, p, 7 * p, c])
         elif text[0] == 'b':
             rectlist.append([x, y, p, 7 * p, c])
             rectlist.append([x + p, y + 3 * p, 3 * p, p, c])
