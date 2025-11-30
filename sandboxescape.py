@@ -39,11 +39,17 @@ def convertStringIntoPygameRects(text, x, y, p):
         spaceDelay = 0
         verticalDelay = 0
         for i in range(len(t[0])):
-            if t[0][i] == ' ':
-                spaceDelay -= 4
-            elif t[0][i] == '\n':
-                verticalDelay += 8
-                spaceDelay = -6
+            if i != 0 or t[0][i - 1] != '\n':
+                if t[0][i] in [' ', 'i', 'j', 'l']:
+                    spaceDelay -= 4
+                elif t[0][i] in ['c', 'r', 't', 'z']:
+                    spaceDelay -= 2
+                elif t[0][i] in ['b', 'd', 'e', 'f', 'g', 'h', 'k', 'n', 'o', 'p', 's', 'u', 'y']:
+                    spaceDelay -= 1
+            if t[0][i] in ['\n', ' ']:
+                if t[0][i] == '\n':
+                    verticalDelay += 11
+                    spaceDelay = -6
             else:
                 textCode.append([t[0][i], t[1] + spaceDelay, t[2] + verticalDelay, t[3], t[4]])
             spaceDelay += 6
