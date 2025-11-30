@@ -39,13 +39,16 @@ def convertStringIntoPygameRects(text, x, y, p):
         spaceDelay = 0
         verticalDelay = 0
         for i in range(len(t[0])):
-            if i != 0 or t[0][i - 1] != '\n':
-                if t[0][i] in [' ', 'i', 'j', 'l']:
-                    spaceDelay -= 4
-                elif t[0][i] in ['c', 'r', 't', 'z']:
-                    spaceDelay -= 2
-                elif t[0][i] in ['b', 'd', 'e', 'f', 'g', 'h', 'k', 'n', 'o', 'p', 's', 'u', 'y']:
-                    spaceDelay -= 1
+            if t[0][i - 1] in [' ', 'i', 'j', 'l', '.', '!', '|', ':', "'"]:
+                spaceDelay -= 4
+            elif t[0][i - 1] in [',', '(', ')', '[', ']', ';']:
+                spaceDelay -= 3
+            elif t[0][i - 1] in ['c', 'r', 't', 'z', '{', '-', '}', '=', '+', '<', '>', '"']:
+                spaceDelay -= 2
+            elif t[0][i - 1] in ['b', 'd', 'e', 'f', 'g', 'h', 'k', 'n', 'o', 'p', 's', 'u', 'y', '?', '_', '&', '/', '\\']:
+                spaceDelay -= 1
+            elif t[0][i - 1] == '%':
+                spaceDelay += 2
             if t[0][i] in ['\n', ' ']:
                 if t[0][i] == '\n':
                     verticalDelay += 11
