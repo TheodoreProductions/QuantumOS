@@ -183,9 +183,9 @@ def run(textlist, p):
             rectlist.append([x + 2 * p, y + 3 * p, p, p, c])
             rectlist.append([x + 1 * p, y + 4 * p, p, p, c])
         elif text[0] == '1':
-            rectlist.append([x + p, y, 2 * p, p, c])
-            rectlist.append([x + p, y + 6 * p, 3 * p, p, c])
-            rectlist.append([x + 2 * p, y + p, p, 5 * p, c])
+            rectlist.append([x, y, 2 * p, p, c])
+            rectlist.append([x, y + 6 * p, 3 * p, p, c])
+            rectlist.append([x + p, y + p, p, 5 * p, c])
         elif text[0] == '2':
             rectlist.append([x, y, 3 * p, p, c])
             rectlist.append([x + 3 * p, y + p, p, p, c])

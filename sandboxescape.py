@@ -43,7 +43,7 @@ def convertStringIntoPygameRects(text, x, y, p):
                 spaceDelay -= 4
             elif t[0][i - 1] in [',', '(', ')', '[', ']', ';']:
                 spaceDelay -= 3
-            elif t[0][i - 1] in ['c', 'r', 't', 'z', '{', '-', '}', '=', '+', '<', '>', '"']:
+            elif t[0][i - 1] in ['c', 'r', 't', 'z', '{', '-', '}', '=', '+', '<', '>', '"', '1']:
                 spaceDelay -= 2
             elif t[0][i - 1] in ['b', 'd', 'e', 'f', 'g', 'h', 'k', 'n', 'o', 'p', 's', 'u', 'y', '?', '_', '&', '/', '\\']:
                 spaceDelay -= 1
