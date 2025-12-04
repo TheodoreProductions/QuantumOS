@@ -232,6 +232,11 @@ def run(textlist, p):
             rectlist.append([x, y + 3 * p, p, 4 * p, c])
             rectlist.append([x + p, y + 2 * p, 2 * p, p, c])
             rectlist.append([x + 3 * p, y + 3 * p, p, 4 * p, c])
+        elif text[0] == 'o':
+            rectlist.append([x + p, y + 2 * p, 2 * p, p, c])
+            rectlist.append([x, y + 3 * p, p, 3 * p, c])
+            rectlist.append([x + 3 * p, y + 3 * p, p, 3 * p, c])
+            rectlist.append([x + p, y + 6 * p, 2 * p, p, c])
         elif text[0] == '0':
             rectlist.append([x + p, y, 3 * p, p, c])
             rectlist.append([x + p, y + 6 * p, 3 * p, p, c])
