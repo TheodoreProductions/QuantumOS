@@ -359,6 +359,9 @@ def run(textlist, p):
             rectlist.append([x + 4 * p, y + p, p, 6 * p, c])
         elif text[0] == '.':
             rectlist.append([x, y + 6 * p, p, p, c])
+        elif text[0] == ',':
+            rectlist.append([x + p, y + 6 * p, p, 2 * p, c])
+            rectlist.append([x, y + 7 * p, 2 * p, p, c])
         else:
             rectlist.append([x, y, 3 * p, 4 * p, c])
             rectlist.append([x + 3 * p, y, 2 * p, 4 * p, (255, 0, 255)])
