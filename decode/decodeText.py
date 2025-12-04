@@ -174,6 +174,64 @@ def run(textlist, p):
             rectlist.append([x, y + 2 * p, 3 * p, p, c])
             rectlist.append([x + 3 * p, y + 3 * p, p, 3 * p, c])
             rectlist.append([x, y + 6 * p, 3 * p, p, c])
+        elif text[0] == 'c':
+            rectlist.append([x, y + 3 * p, p, 3 * p, c])
+            rectlist.append([x + p, y + 2 * p, 2 * p, p, c])
+            rectlist.append([x + p, y + 6 * p, 2 * p, p, c])
+        elif text[0] == 'd':
+            rectlist.append([x + 3 * p, y, p, 7 * p, c])
+            rectlist.append([x + p, y + 2 * p, 3 * p, p, c])
+            rectlist.append([x, y + 3 * p, p, 3 * p, c])
+            rectlist.append([x + p, y + 6 * p, 3 * p, p, c])
+        elif text[0] == 'e':
+            rectlist.append([x + p, y + 2 * p, 2 * p, p, c])
+            rectlist.append([x, y + 3 * p, p, 3 * p, c])
+            rectlist.append([x + 3 * p, y + 3 * p, p, 2 * p, c])
+            rectlist.append([x, y + 4 * p, 4 * p, p, c])
+            rectlist.append([x + p, y + 6 * p, 3 * p, p, c])
+        elif text[0] == 'f':
+            rectlist.append([x + 2 * p, y, p, p, c])
+            rectlist.append([x + 3 * p, y + p, p, p, c])
+            rectlist.append([x + p, y + p, p, 6 * p, c])
+            rectlist.append([x, y + 3 * p, 3 * p, p, c])
+        elif text[0] == 'g':
+            rectlist.append([x + p, y + 2 * p, 2 * p, p, c])
+            rectlist.append([x, y + 3 * p, p, 3 * p, c])
+            rectlist.append([x + p, y + 6 * p, 2 * p, p, c])
+            rectlist.append([x + 3 * p, y + 3 * p, p, 6 * p, c])
+            rectlist.append([x, y + 8 * p, p, p, c])
+            rectlist.append([x + p, y + 9 * p, 2 * p, p, c])
+        elif text[0] == 'h':
+            rectlist.append([x, y, p, 7 * p, c])
+            rectlist.append([x, y + 2 * p, 3 * p, p, c])
+            rectlist.append([x + 3 * p, y + 3 * p, p, 4 * p, c])
+        elif text[0] == 'i':
+            rectlist.append([x, y, p, p, c])
+            rectlist.append([x, y + 2 * p, p, 5 * p, c])
+        elif text[0] == 'j':
+            rectlist.append([x, y, p, p, c])
+            rectlist.append([x, y + 2 * p, p, 7 * p, c])
+            rectlist.append([x - p, y + 9 * p, p, p, c])
+            rectlist.append([x - 2 * p, y + 8 * p, p, p, c])
+        elif text[0] == 'k':
+            rectlist.append([x, y, p, 7 * p, c])
+            rectlist.append([x + 3 * p, y + 2 * p, p, p, c])
+            rectlist.append([x + 2 * p, y + 3 * p, p, p, c])
+            rectlist.append([x + p, y + 4 * p, p, p, c])
+            rectlist.append([x + 2 * p, y + 5 * p, p, p, c])
+            rectlist.append([x + 3 * p, y + 6 * p, p, p, c])
+        elif text[0] == 'l':
+            rectlist.append([x, y, p, 7 * p, c])
+        elif text[0] == 'm':
+            rectlist.append([x, y + 3 * p, p, 4 * p, c])
+            rectlist.append([x + p, y + 2 * p, p, p, c])
+            rectlist.append([x + 2 * p, y + 3 * p, p, 4 * p, c])
+            rectlist.append([x + 3 * p, y + 2 * p, p, p, c])
+            rectlist.append([x + 4 * p, y + 3 * p, p, 4 * p, c])
+        elif text[0] == 'n':
+            rectlist.append([x, y + 3 * p, p, 4 * p, c])
+            rectlist.append([x + p, y + 2 * p, 2 * p, p, c])
+            rectlist.append([x + 3 * p, y + 3 * p, p, 4 * p, c])
         elif text[0] == '0':
             rectlist.append([x + p, y, 3 * p, p, c])
             rectlist.append([x + p, y + 6 * p, 3 * p, p, c])
