@@ -247,8 +247,25 @@ def run(textlist, p):
             rectlist.append([x, y + 3 * p, p, 3 * p, c])
             rectlist.append([x + 3 * p, y + 3 * p, p, 7 * p, c])
             rectlist.append([x + p, y + 6 * p, 2 * p, p, c])
-            rectlist.append([x + 4 * p, y + 5 * p, p, p, c])
-            rectlist.append([x + 5 * p, y + 4 * p, p, p, c])
+            rectlist.append([x + 3.5 * p, y + 8 * p, p, p, c])
+            rectlist.append([x + 3.9 * p, y + 7 * p, p, p, c])
+        elif text[0] == 'r':
+            rectlist.append([x, y + 3 * p, p, 4 * p, c])
+            rectlist.append([x + p, y + 2 * p, p, p, c])
+            rectlist.append([x + 2 * p, y + 3 * p, p, p, c])
+        elif text[0] == 's':
+            rectlist.append([x + p, y + 2 * p, 3 * p, p, c])
+            rectlist.append([x, y + 3 * p, p, p, c])
+            rectlist.append([x + p, y + 4 * p, 2 * p, p, c])
+            rectlist.append([x + 3 * p, y + 5 * p, p, p, c])
+            rectlist.append([x, y + 6 * p, 3 * p, p, c])
+        elif text[0] == 't':
+            rectlist.append([x, y + 2 * p, 3 * p, p, c])
+            rectlist.append([x + p, y + p, p, 6 * p, c])
+        elif text[0] == 'u':
+            rectlist.append([x, y + 2 * p, p, 4 * p, c])
+            rectlist.append([x + 3 * p, y + 2 * p, p, 4 * p, c])
+            rectlist.append([x + p, y + 6 * p, 2 * p, p, c])
         elif text[0] == '0':
             rectlist.append([x + p, y, 3 * p, p, c])
             rectlist.append([x + p, y + 6 * p, 3 * p, p, c])
