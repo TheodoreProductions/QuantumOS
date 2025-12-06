@@ -3,7 +3,6 @@ def run(blockList, b, p):
     for block in blockList:
         x = block['x'] * b
         y = block['y'] * b
-        text_string = block['text']
         if 1==2:
             a=23241312
         else:
