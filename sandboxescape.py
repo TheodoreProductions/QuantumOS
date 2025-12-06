@@ -38,23 +38,28 @@ def convertStringIntoPygameRects(text, x, y, p):
     for t in text:
         spaceDelay = 0
         verticalDelay = 0
-        for i in range(len(t[0])):
-            if t[0][i - 1] in [' ', 'i', 'j', 'l', '.', '!', '|', ':', "'"]:
+        text_string = t['text']
+        text_x = t['x']
+        text_y = t['y']
+        text_color = t['color']
+        text_size = t['size']
+        for i in range(len(text_string)):
+            if text_string[i - 1] in [' ', 'i', 'j', 'l', '.', '!', '|', ':', "'"]:
                 spaceDelay -= 4
-            elif t[0][i - 1] in [',', '(', ')', '[', ']', ';']:
+            elif text_string[i - 1] in [',', '(', ')', '[', ']', ';']:
                 spaceDelay -= 3
-            elif t[0][i - 1] in ['c', 'r', 't', 'z', '{', '-', '}', '=', '+', '<', '>', '"', '1', 'f']:
+            elif text_string[i - 1] in ['c', 'r', 't', 'z', '{', '-', '}', '=', '+', '<', '>', '"', '1', 'f']:
                 spaceDelay -= 2
-            elif t[0][i - 1] in ['b', 'd', 'e', 'g', 'h', 'k', 'n', 'o', 'p', 's', 'u', 'y', '?', '_', '&', '/', '\\', 'q']:
+            elif text_string[i - 1] in ['b', 'd', 'e', 'g', 'h', 'k', 'n', 'o', 'p', 's', 'u', 'y', '?', '_', '&', '/', '\\', 'q']:
                 spaceDelay -= 1
-            elif t[0][i - 1] == '%':
+            elif text_string[i - 1] == '%':
                 spaceDelay += 2
-            if t[0][i] in ['\n', ' ']:
-                if t[0][i] == '\n':
+            if text_string[i] in ['\n', ' ']:
+                if text_string[i] == '\n':
                     verticalDelay += 11
                     spaceDelay = -6
             else:
-                textCode.append([t[0][i], t[1] + spaceDelay, t[2] + verticalDelay, t[3], t[4]])
+                textCode.append([text_string[i], text_x + spaceDelay, text_y + verticalDelay, text_color, text_size])
             spaceDelay += 6
     rectList = decodeText.run(textCode, p)
     rectList = turnBlocksIntoPygameRects(rectList)
