@@ -38,12 +38,24 @@ def convertStringIntoPygameRects(text, x, y, p):
     for t in text:
         spaceDelay = 0
         verticalDelay = 0
-        text_string = t['text']
+
+        text_string = ''
+        colors = [] # Temperoral
+        text_colors = [] # The real one
+        for tt in t['text']:
+            text_string += tt[0]
+            colors.append([tt[1], len(tt[0])])
+
+        for c in colors:
+            for i in range(c[1]):
+                text_colors.append(c[0]) # Make a list of colors , 1 per character
+
         text_x = t['x']
         text_y = t['y']
-        text_color = t['color']
         text_size = t['size']
         for i in range(len(text_string)):
+            current_color = text_colors[i]
+
             if text_string[i - 1] in [' ', 'i', 'j', 'l', '.', '!', '|', ':', "'"]:
                 spaceDelay -= 4
             elif text_string[i - 1] in [',', '(', ')', '[', ']', ';']:
@@ -54,12 +66,13 @@ def convertStringIntoPygameRects(text, x, y, p):
                 spaceDelay -= 1
             elif text_string[i - 1] == '%':
                 spaceDelay += 2
-            if text_string[i] in ['\n', ' ']:
+            
+            if text_string[i] in ['\n', ' ']: # Invisible characters
                 if text_string[i] == '\n':
                     verticalDelay += 11
                     spaceDelay = -6
             else:
-                textCode.append([text_string[i], text_x + spaceDelay, text_y + verticalDelay, text_color, text_size])
+                textCode.append([text_string[i], text_x + spaceDelay, text_y + verticalDelay, current_color, text_size])
             spaceDelay += 6
     rectList = decodeText.run(textCode, p)
     rectList = turnBlocksIntoPygameRects(rectList)
