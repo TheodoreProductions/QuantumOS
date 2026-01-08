@@ -1,18 +1,40 @@
 def blocks(screen):
     if screen == 'debug':
-        return [['grass', 0, 5]]
+        return [{
+            'text': 'grass',
+            'x': 0,
+            'y': 5
+        }]
     else:
-        return [['error', 0, 0]]
+        return [{
+            'text': 'error',
+            'x': 0,
+            'y': 0
+        }]
 
 def barriers(screen):
     if screen == 'debug':
         return []
     else:
-        return [0, 0]
+        return [{
+            'x': 0,
+            'y': 0
+        }]
 
 def text(screen):
-    # Text, x, y, color, size
     if screen == 'debug':
-        return [['''A BCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n0123456789\n.,!?()[]{-}_=+@#$%^&*/\\|<>:;'"\n�\nHello, this is some test thing.\nThe quick brown fox jumps over the lazy dog.\n''', 1, 1, (0, 0, 0), 1]]
+        return [{
+            'text': '''A BCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n0123456789\n.,!?()[]{-}_=+@#$%^&*/\\|<>:;'"\n�\nHello, this is some test thing.\nThe quick brown fox jumps over the lazy dog.\n''',
+            'x': 1,
+            'y': 1,
+            'color': (0, 0, 0),
+            'size': 1
+        }]
     else:
-        return [['Error 0000: screen number wrong', 1, 1, (255, 0, 255), 1]]
+        return [{
+            'text': 'Error 0000: screen number wrong',
+            'x': 1,
+            'y': 1,
+            'color': (255, 0, 255),
+            'size': 1
+        }]

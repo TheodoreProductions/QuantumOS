@@ -1,8 +1,8 @@
 def run(barrierList, b, p):
     rectlist = []
     for barrier in barrierList:
-        x = barrier[0] * b
-        y = barrier[1] * b
+        x = barrier['x'] * b
+        y = barrier['y'] * b
 
         r = (255, 0, 0)
 

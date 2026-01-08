@@ -1,9 +1,8 @@
 def run(blockList, b, p):
     rectlist = []
     for block in blockList:
-        x = block[1] * b
-        y = block[2] * b
-        name = block[0]
+        x = block['x'] * b
+        y = block['y'] * b
         if 1==2:
             a=23241312
         else:
