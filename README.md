@@ -19,11 +19,6 @@ This project uses [uv](https://docs.astral.sh/uv/) for Python package management
 
 ## Running the Applications
 
-### Main QuantumOS
-```bash
-uv run python MainOS.py
-```
-
 ### Sandbox Escape Game
 ```bash
 uv run python sandboxescape.py

@@ -8,6 +8,5 @@ dependencies = [
 ]
 
 [project.scripts]
-quantumos = "MainOS:main"
 sandbox-escape = "sandboxescape:main"
 test-code = "testCode:main"
