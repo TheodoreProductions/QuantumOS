@@ -1,1 +1,1 @@
-Error 0000: screen number wrong
+E0000: screen number wrong

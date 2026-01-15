@@ -3,10 +3,13 @@ import sys
 
 from decode import decodeBlocks
 from decode import decodeText
-from decode import decodeBarriers
+from decode import decodeHitboxes
 from decode import decodePlayer
 
-from getData import worldItems
+from getData import blockData
+from getData import hitboxData
+from getData import textData
+from getData import stationaryTextData
 
 def version():
     # maj.med.min.bug vernum
@@ -48,7 +51,7 @@ def convertStringIntoPygameRects(text, x, y, p):
 
         for c in colors:
             for i in range(c[1]):
-                text_colors.append(c[0]) # Make a list of colors , 1 per character
+                text_colors.append(c[0]) # Make a list of colors, 1 per character
 
         text_x = t['x']
         text_y = t['y']
@@ -56,16 +59,17 @@ def convertStringIntoPygameRects(text, x, y, p):
         for i in range(len(text_string)):
             current_color = text_colors[i]
 
-            if text_string[i - 1] in [' ', 'i', 'j', 'l', '.', '!', '|', ':', "'"]:
-                spaceDelay -= 4
-            elif text_string[i - 1] in [',', '(', ')', '[', ']', ';']:
-                spaceDelay -= 3
-            elif text_string[i - 1] in ['c', 'r', 't', 'z', '{', '-', '}', '=', '+', '<', '>', '"', '1', 'f']:
-                spaceDelay -= 2
-            elif text_string[i - 1] in ['b', 'd', 'e', 'g', 'h', 'k', 'n', 'o', 'p', 's', 'u', 'y', '?', '_', '&', '/', '\\', 'q']:
-                spaceDelay -= 1
-            elif text_string[i - 1] == '%':
-                spaceDelay += 2
+            if i != 0:
+                if text_string[i - 1] in [' ', 'i', 'j', 'l', '.', '!', '|', ':', "'"]:
+                    spaceDelay -= 4
+                elif text_string[i - 1] in [',', '(', ')', '[', ']', ';']:
+                    spaceDelay -= 3
+                elif text_string[i - 1] in ['c', 'r', 't', 'z', '{', '-', '}', '=', '+', '<', '>', '"', '1', 'f']:
+                    spaceDelay -= 2
+                elif text_string[i - 1] in ['b', 'd', 'e', 'g', 'h', 'k', 'n', 'o', 'p', 's', 'u', 'y', '?', '_', '&', '/', '\\', 'q']:
+                    spaceDelay -= 1
+                elif text_string[i - 1] == '%':
+                    spaceDelay += 2
             
             if text_string[i] in ['\n', ' ']: # Invisible characters
                 if text_string[i] == '\n':
@@ -73,7 +77,9 @@ def convertStringIntoPygameRects(text, x, y, p):
                     spaceDelay = -6
             else:
                 textCode.append([text_string[i], text_x + spaceDelay, text_y + verticalDelay, current_color, text_size])
+
             spaceDelay += 6
+
     rectList = decodeText.run(textCode, p)
     rectList = turnBlocksIntoPygameRects(rectList)
     return rectList
@@ -97,8 +103,6 @@ def main():
 
     width, height = 1024, 1024
 
-    inc = 0
-
     # Screen settings
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption(fullName)
@@ -106,14 +110,12 @@ def main():
     # Screen num
     screenNum = 'debug'
 
-    # 0 = map
-
     # Start settings
     update = True
     debug = True
     printDebugText = False
-    showBarriers = False
-    showPlayer = False
+    showHitboxes = False
+    showPlayer = True
 
     # Game loop
     running = True
@@ -122,60 +124,39 @@ def main():
 
         # Detect keys
         keys = pygame.key.get_pressed()
-
-        # if keys[pygame.K_1]:
-        #     debug = True
-        #     update = True
-        # if keys[pygame.K_2]:
-        #     debug = False
-        #     update = True
-        # if keys[pygame.K_3]:
-        #     showBarriers = True
-        #     update = True
-        # if keys[pygame.K_4]:
-        #     showBarriers = False
-        #     update = True
             
         if update:
-            # ----------------------
-            # -----Moving rects-----
-            # ----------------------
+
+            # --------------------------
+            # ----- Moving objects -----
+            # --------------------------
 
             # Blocks
-            if debug:
-                blocks = worldItems.blocks('debug')
-            else:
-                blocks = worldItems.blocks(screenNum)
+            blocks = blockData.run(screenNum)
             
             blocks = decodeBlocks.run(blocks, 64, 4)
             blocks = turnBlocksIntoPygameRects(blocks)
 
-            # Barriers
-            if debug:
-                barriers = worldItems.barriers('debug')
-            else:
-                barriers = worldItems.barriers(screenNum)
+            # Hitboxes
+            hitboxes = hitboxData.run(screenNum)
             
-            if showBarriers:
-                barriers = decodeBarriers.run(barriers, 64, 4)
-                barriers = turnBlocksIntoPygameRects(barriers)
+            if showHitboxes:
+                hitboxes = decodeHitboxes.run(barriers, 64, 4)
+                hitboxes = turnBlocksIntoPygameRects(hitboxes)
             else:
-                barriers = []
+                hitboxes = []
 
             # Text
-            if debug:
-                text = worldItems.text('debug')
-            else:
-                text = worldItems.text(screenNum)
-                
+            text = textData.run(screenNum)            
+
             text = convertStringIntoPygameRects(text, 1, 1, 4)
 
             # Combine them all
-            movingRects = addLists([blocks, text, barriers])
+            movingRects = addLists([blocks, text, hitboxes])
 
-            # --------------------------
-            # -----Stationary rects-----
-            # --------------------------
+            # ------------------------------
+            # ----- Stationary objects -----
+            # ------------------------------
 
             # Define player
             x = width // 2 - 20
@@ -183,33 +164,37 @@ def main():
             player = decodePlayer.run(x, y, 4)
             player = turnBlocksIntoPygameRects(player)
 
-            # Combine them all
-            if showPlayer:
-                stationaryRects = addLists([player])
-            else:
-                stationaryRects = []
+            # Text
+            stationaryText = stationaryTextData.run(screenNum)            
 
-            # Player settings
+            stationaryText = convertStringIntoPygameRects(stationaryText, 1, 1, 4)
+
+            # Combine them all
+            stationaryRects = addLists([stationaryText])
+            if showPlayer:
+                stationaryRects = addLists([stationaryRects, player])
+            
+            # Initialize player settings
             xVelocity = 0
             yVelocity = 0
             speed = 6
             frictionSpeed = 3
 
-            # Update update :)
+            # Update update
             update = False
 
-        # ------------------------
-        # -----Quit Detection-----
-        # ------------------------
+        # --------------------------
+        # ----- Quit Detection -----
+        # --------------------------
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
                 print('\n\nThank you for using an TheodoreProductions™ project. We hope to see you again!\n\n')
 
-        # ------------------
-        # -----Movement-----
-        # ------------------
+        # --------------------
+        # ----- Movement -----
+        # --------------------
 
         # Movement
         if keys[pygame.K_LEFT]:
