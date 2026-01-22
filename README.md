@@ -19,14 +19,9 @@ This project uses [uv](https://docs.astral.sh/uv/) for Python package management
 
 ## Running the Applications
 
-### Sandbox Escape Game
+### SandboxEscape Game
 ```bash
 uv run python sandboxescape.py
-```
-
-### 3D Test Renderer
-```bash
-uv run python testCode.py
 ```
 
 ## Development

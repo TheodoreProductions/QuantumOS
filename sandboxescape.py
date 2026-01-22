@@ -15,7 +15,7 @@ def version():
     # major.medium.minor.bugfix (Diden't add anything)
     # Can have m/m/m and bugfix at same time
     # Dont need to increment m/m/m/b when the ending number changes
-    version = '0.0.0.0 00001' # +1 every git commit even when not this file is changed
+    version = '0.0.0.0 000001' # +1 every git commit even when not this file is changed
     # Remember to add full version to git commit
 
     name = 'sandbox-escape'
@@ -84,6 +84,16 @@ def convertStringIntoPygameRects(text, x, y, p):
                     text_x = (256 - findLengthOfText(text_string)) / 2
                 if text_y == 'mid':
                     text_y = (256 - findLengthOfText(text_string)) / 2
+
+                if text_x == '-': # Going to negetive coordinates
+                    text_x = 1
+                if text_y == '-':
+                    text_y = 1
+
+                if text_x == '+': # Going to positive coordinates
+                    text_x = 256 - findLengthOfText(text_string)
+                if text_y == '+':
+                    text_y = 256 - findLengthOfText(text_string)
                 
                 textCode.append([text_string[i], text_x + spaceDelay, text_y + verticalDelay, current_color, text_size])
 
@@ -190,8 +200,8 @@ def main():
             # ------------------------------
 
             # Define player
-            x = width // 2 - 20
-            y = height // 2 - 30
+            x = (width - 20) / 2
+            y = (height - 60) / 2
             player = decodePlayer.run(x, y, 4)
             player = turnBlocksIntoPygameRects(player)
 
