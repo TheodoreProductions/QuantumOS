@@ -1,7 +1,7 @@
 def run(screen):
     if screen == 'debug':
         return [{
-            'name': 'LOLOL',
+            'name': 'missingBlock',
             'x': 0,
             'y': 8
         }]

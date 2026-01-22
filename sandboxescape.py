@@ -12,8 +12,12 @@ from getData import textData
 from getData import stationaryTextData
 
 def version():
-    # maj.med.min.bug vernum
-    version = '0.0.2.0 00002'
+    # major.medium.minor.bugfix (Diden't add anything)
+    # Can have m/m/m and bugfix at same time
+    # Dont need to increment m/m/m/b when the ending number changes
+    version = '0.0.0.0 00001' # +1 every git commit even when not this file is changed
+    # Remember to add full version to git commit
+
     name = 'sandbox-escape'
     return name + ' ' + version
 
@@ -76,6 +80,11 @@ def convertStringIntoPygameRects(text, x, y, p):
                     verticalDelay += 11
                     spaceDelay = -6
             else:
+                if text_x == 'mid': # If either values are 'mid', calculate
+                    text_x = (256 - findLengthOfText(text_string)) / 2
+                if text_y == 'mid':
+                    text_y = (256 - findLengthOfText(text_string)) / 2
+                
                 textCode.append([text_string[i], text_x + spaceDelay, text_y + verticalDelay, current_color, text_size])
 
             spaceDelay += 6
@@ -83,6 +92,28 @@ def convertStringIntoPygameRects(text, x, y, p):
     rectList = decodeText.run(textCode, p)
     rectList = turnBlocksIntoPygameRects(rectList)
     return rectList
+
+def findLengthOfText(textList): # The 'text' attribute in getData Text files
+    totalLength = 0
+
+    for text in textList:
+        for t in text:
+            if t in [' ', 'i', 'j', 'l', '.', '!', '|', ':', "'"]:
+                totalLength += 1
+            elif t in [',', '(', ')', '[', ']', ';']:
+                totalLength += 2
+            elif t in ['c', 'r', 't', 'z', '{', '-', '}', '=', '+', '<', '>', '"', '1', 'f']:
+                totalLength += 3
+            elif t in ['b', 'd', 'e', 'g', 'h', 'k', 'n', 'o', 'p', 's', 'u', 'y', '?', '_', '&', '/', '\\', 'q']:
+                totalLength += 4
+            elif t == '%':
+                totalLength += 7
+            else:
+                totalLength += 5
+            
+            totalLength += 1
+
+    return totalLength
 
 def main():
     fullName = version()
@@ -233,17 +264,17 @@ def main():
 
         # Drawing
         screen.fill(pureWhite)
-        limit = 64
+        limit = 1024
         nLimit = int('-' + str(limit))
         for rect in movingRects:
             actualRects += 1
-            if rect[0].x < nLimit or rect[0].x > width + limit or rect[0].y < nLimit or rect[0].y > height + limit:
+            if rect[0].x < nLimit or rect[0].x > width or rect[0].y < nLimit or rect[0].y > limit:
                 continue
             pygame.draw.rect(screen, rect[1], rect[0])
             drawnRects += 1
         for rect in stationaryRects:
             actualRects += 1
-            if rect[0].x < nLimit or rect[0].x > width + limit or rect[0].y < nLimit or rect[0].y > height + limit:
+            if rect[0].x < nLimit or rect[0].x > limit or rect[0].y < nLimit or rect[0].y > limit:
                 continue
             pygame.draw.rect(screen, rect[1], rect[0])
             drawnRects += 1
