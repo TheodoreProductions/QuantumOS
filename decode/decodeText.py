@@ -527,6 +527,16 @@ def run(textlist, p):
         elif text[0] == '"':
             rectlist.append([x, y, p, 2 * p, c])
             rectlist.append([x + 2 * p, y, p, 2 * p, c])
+
+            # ---------------------------------------
+            # ----- Private Use Area Characters -----
+            # ---------------------------------------
+        
+        elif text[0] == '': # Nuke currency / Thormp E000
+            rectlist.append([x + p, y + p, p, 6 * p, c])
+            rectlist.append([x + 2 * p, y, p, p, c])
+            rectlist.append([x + 3 * p, y + p, p, 6 * p, c])
+            rectlist.append([x, y + 3 * p, 5 * p, p, c])
         else:
             rectlist.append([x, y, 2.5 * p, 3.5 * p, c])
             rectlist.append([x + 2.5 * p, y, 2.5 * p, 3.5 * p, (255, 0, 255)])

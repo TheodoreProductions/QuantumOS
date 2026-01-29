@@ -15,7 +15,7 @@ def version():
     # major.medium.minor.bugfix (Diden't add anything)
     # Can have m/m/m and bugfix at same time
     # Dont need to increment m/m/m/b when the ending number changes
-    version = '0.0.0.0 000001' # +1 every git commit even when not this file is changed
+    version = '0.0.0.0 000002' # +1 every git commit even when not this file is changed
     # Remember to add full version to git commit
 
     name = 'sandbox-escape'

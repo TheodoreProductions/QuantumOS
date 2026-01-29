@@ -5,6 +5,7 @@ def run(screen):
 abcdefghijklmnopqrstuvwxyz
 0123456789
 .,!?()[]{-}_=+@#$%^&*/\\|<>:;'"
+
 �
 Hello, this is some test thing.
 The quick brown fox jumps over the lazy dog.

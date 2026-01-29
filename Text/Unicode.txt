@@ -1,3 +1,11 @@
-trademark(™):       2122
-copyright(©):       00A9
-replacement(�):     FFFD
+trademark(™):   2122
+copyright(©):   00A9
+replacement(�): FFFD
+
+------------------------------------------
+------------------------------------------
+----- SandboxEscape Private Use Area -----
+------------------------------------------
+------------------------------------------
+
+Nuke currency / Thormp(): E000
