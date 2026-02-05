@@ -5,11 +5,13 @@ from decode import decodeBlocks
 from decode import decodeText
 from decode import decodeHitboxes
 from decode import decodePlayer
+from decode import decodeBoxes
 
 from getData import blockData
 from getData import hitboxData
 from getData import textData
 from getData import stationaryTextData
+from getData import stationaryBoxData
 
 def version():
     # major.medium.minor.bugfix (Diden't add anything)
@@ -151,6 +153,9 @@ def main():
     # Screen num
     screenNum = 'debug'
 
+    # debug = debug
+    # A = area A
+
     # Start settings
     update = True
     debug = True
@@ -210,10 +215,16 @@ def main():
 
             stationaryText = convertStringIntoPygameRects(stationaryText, 1, 1, 4)
 
+            # Stationary boxes
+            stationaryBoxes = stationaryBoxData.run(screenNum)
+            
+            stationaryBoxes = decodeBoxes.run(stationaryBoxes, 4)
+            stationaryBoxes = turnBlocksIntoPygameRects(stationaryBoxes)
+
             # Combine them all
             stationaryRects = addLists([stationaryText])
             if showPlayer:
-                stationaryRects = addLists([stationaryRects, player])
+                stationaryRects = addLists([stationaryRects, player, stationaryBoxes])
             
             # Initialize player settings
             xVelocity = 0
