@@ -12,12 +12,13 @@ from getData import hitboxData
 from getData import textData
 from getData import stationaryTextData
 from getData import stationaryBoxData
+from getData import healthbarData
 
 def version():
     # major.medium.minor.bugfix (Diden't add anything)
     # Can have m/m/m and bugfix at same time
     # Dont need to increment m/m/m/b when the ending number changes
-    version = '0.0.0.0 000002' # +1 every git commit even when not this file is changed
+    version = '0.0.0.0 000003' # +1 every git commit even when not this file is changed
     # Remember to add full version to git commit
 
     name = 'sandbox-escape'
@@ -41,7 +42,7 @@ def turnBlocksIntoPygameRects(blocks):
         newBlocks.append(newRect)
     return newBlocks
 
-def convertStringIntoPygameRects(text, x, y, p):
+def convertStringIntoPygameRects(text, p):
     textCode = []
     rectList = []
     for t in text:
@@ -137,13 +138,6 @@ def main():
     # Debug
     debug = True
 
-    # Colors
-    pureWhite = (255, 255, 255)
-    pureBlack = (0, 0, 0)
-    pureRed = (255, 0, 0)
-    pureGreen = (0, 255, 0)
-    pureBlue = (0, 0, 255)
-
     width, height = 1024, 1024
 
     # Screen settings
@@ -173,6 +167,39 @@ def main():
             
         if update:
 
+            # ------------------------------
+            # ----- Stationary objects -----
+            # ------------------------------
+
+            # Healthbar
+            healthbar = healthbarData.run(screenNum)
+            healthbar, healthbarText = decodeBoxes.run(healthbar, 4)
+            healthbar = turnBlocksIntoPygameRects(healthbar)
+            healthbarText = convertStringIntoPygameRects(healthbarText, 4) 
+
+            # Define player
+            x = (width - 20) / 2
+            y = (height - 60) / 2
+            player = decodePlayer.run(x, y, 4)
+            player = turnBlocksIntoPygameRects(player)
+
+            # Text
+            stationaryText = stationaryTextData.run(screenNum)            
+
+            stationaryText = convertStringIntoPygameRects(stationaryText, 4)
+
+            # Stationary boxes
+            stationaryBoxes = stationaryBoxData.run(screenNum)
+            
+            stationaryBoxes, stationaryBoxText = decodeBoxes.run(stationaryBoxes, 4)
+            stationaryBoxes = turnBlocksIntoPygameRects(stationaryBoxes)
+            stationaryBoxText = convertStringIntoPygameRects(stationaryBoxText, 4)
+
+            # Combine them all
+            stationaryRects = addLists([stationaryText, stationaryBoxes, stationaryBoxText])
+            if showPlayer:
+                stationaryRects = addLists([stationaryRects, player, healthbar, healthbarText])
+            
             # --------------------------
             # ----- Moving objects -----
             # --------------------------
@@ -195,36 +222,10 @@ def main():
             # Text
             text = textData.run(screenNum)            
 
-            text = convertStringIntoPygameRects(text, 1, 1, 4)
+            text = convertStringIntoPygameRects(text, 4)
 
             # Combine them all
             movingRects = addLists([blocks, text, hitboxes])
-
-            # ------------------------------
-            # ----- Stationary objects -----
-            # ------------------------------
-
-            # Define player
-            x = (width - 20) / 2
-            y = (height - 60) / 2
-            player = decodePlayer.run(x, y, 4)
-            player = turnBlocksIntoPygameRects(player)
-
-            # Text
-            stationaryText = stationaryTextData.run(screenNum)            
-
-            stationaryText = convertStringIntoPygameRects(stationaryText, 1, 1, 4)
-
-            # Stationary boxes
-            stationaryBoxes = stationaryBoxData.run(screenNum)
-            
-            stationaryBoxes = decodeBoxes.run(stationaryBoxes, 4)
-            stationaryBoxes = turnBlocksIntoPygameRects(stationaryBoxes)
-
-            # Combine them all
-            stationaryRects = addLists([stationaryText])
-            if showPlayer:
-                stationaryRects = addLists([stationaryRects, player, stationaryBoxes])
             
             # Initialize player settings
             xVelocity = 0
@@ -284,7 +285,7 @@ def main():
         drawnRects = 0
 
         # Drawing
-        screen.fill(pureWhite)
+        screen.fill((255, 255, 255))
         limit = 1024
         nLimit = int('-' + str(limit))
         for rect in movingRects:
