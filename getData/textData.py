@@ -18,7 +18,7 @@ The quick brown fox jumps over the lazy dog.
                      ['redtext', (255, 0, 0)], 
                      ['bluetext', (0, 0, 255)]],
             'x': 1,
-            'y': 78,
+            'y': 89,
             'size': 1
         }]
     else:

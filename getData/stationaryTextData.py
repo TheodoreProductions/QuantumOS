@@ -3,7 +3,7 @@ def run(screen):
         return [{
             'text': [['This is some stationary text.', (0, 155, 0)]],
             'x': 1,
-            'y': 88,
+            'y': 89,
             'size': 1
         }, {
             'text': [['C- (XY)', (0, 155, 0)]],

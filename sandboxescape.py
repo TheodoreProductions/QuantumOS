@@ -18,8 +18,7 @@ def version():
     # major.medium.minor.bugfix (Diden't add anything)
     # Can have m/m/m and bugfix at same time
     # Dont need to increment m/m/m/b when the ending number changes
-    version = '0.0.0.0 000003' # +1 every git commit even when not this file is changed
-    # Remember to add full version to git commit
+    version = '0.0.0.0 000004' # +1 every git commit even when not this file is changed
 
     name = 'sandbox-escape'
     return name + ' ' + version
@@ -156,6 +155,13 @@ def main():
     printDebugText = False
     showHitboxes = False
     showPlayer = True
+    
+    # Initialize player settings
+    xVelocity = 0
+    yVelocity = 0
+    speed = 6
+    frictionSpeed = 3
+    health = 100
 
     # Game loop
     running = True
@@ -172,7 +178,7 @@ def main():
             # ------------------------------
 
             # Healthbar
-            healthbar = healthbarData.run(screenNum)
+            healthbar = healthbarData.run(screenNum, health)
             healthbar, healthbarText = decodeBoxes.run(healthbar, 4)
             healthbar = turnBlocksIntoPygameRects(healthbar)
             healthbarText = convertStringIntoPygameRects(healthbarText, 4) 
@@ -226,12 +232,6 @@ def main():
 
             # Combine them all
             movingRects = addLists([blocks, text, hitboxes])
-            
-            # Initialize player settings
-            xVelocity = 0
-            yVelocity = 0
-            speed = 6
-            frictionSpeed = 3
 
             # Update update
             update = False

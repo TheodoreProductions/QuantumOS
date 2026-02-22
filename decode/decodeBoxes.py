@@ -3,7 +3,7 @@ def run(boxList, p):
     textData = []
 
     for box in boxList:
-        x = box['x'] * p
+        x = box['x']
         y = box['y'] * p
 
         c = box['color']
@@ -16,25 +16,32 @@ def run(boxList, p):
 
         t = box['textInside'][0]
         tc = box['textInside'][1]
+        rtp = box['textInside'][2] # Raw text padding, don't multiply by p
         tp = box['textInside'][2] * p
 
         if w == 't':
-            w = findLengthOfText(t) * p
+            w = findLengthOfText(t) * p + 2 * tp + p
+            # You have to add 1 once because findLengthOfText adds 1 once already
         else:
             w = w * p
         if h == 't':
-            h = findLengthOfText(t) * p
+            h = findHeightOfText(t) * p + 2 * tp + p
         else:
             h = h * p
-        
-        print(w, h)
-    
+
+        if x == 'r': # Right anchor
+            x = 1024 - w
+        else:
+            x = x * p
+
         textData.append({
             'text': [[t, tc]],
-            'x': x + tp,
-            'y': y + tp,
+            'x': x + rtp + 1,
+            'y': y + rtp + 1,
             'size': 1
         })
+
+        print(x)
 
         # AAAAA
         # BCCCD
@@ -43,9 +50,9 @@ def run(boxList, p):
         # EEEEE
 
         rectList.append([x, y, w, bw, bc]) # A
-        rectList.append([x, y + bw, bw, h - 2 * bw, bc]) # B
+        rectList.append([x, y, bw, h, bc]) # B
         rectList.append([x + bw, y + bw, w - 2 * bw, h - 2 * bw, c]) # C
-        rectList.append([x + w - bw, y + bw, bw, h - 2 * bw, bc]) # D
+        rectList.append([x + w - bw, y, bw, h, bc]) # D
         rectList.append([x, y + h - bw, w, bw, bc]) # E
     
     return rectList, textData
@@ -70,3 +77,12 @@ def findLengthOfText(text):
         totalLength += 1
 
     return totalLength
+
+def findHeightOfText(text):
+    totalHeight = 11
+
+    for t in text:
+        if t in ['\n']:
+            totalHeight += 11
+    
+    return totalHeight
