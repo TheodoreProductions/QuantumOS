@@ -3,9 +3,17 @@ def run(screen):
         return [{
             'x': 'r', # 'r' for right anchor
             'y': 0,
-            'border': [1, (255, 0, 255)], # Border width (0 = no border), color
+            'border': [1, (100, 100, 100)], # Border width (0 = no border), color
             'color': (0, 0, 0),
             'height': 't',
             'width': 't', # 't' stands for text, overrite
-            'textInside': ['Tabcdefghijklmnopqrstuvwxyz', (255, 255, 255), 1] # Text, color, padding (length text to border)
+            'textInside': ['Area ' + str(screen), (255, 255, 255), 1] # Text, color, padding (length text to border)
+        }, {
+            'x': 'c', # 'r' for right anchor
+            'y': 'c',
+            'border': [1, (100, 100, 100)], # Border width (0 = no border), color
+            'color': (0, 0, 0),
+            'height': 't',
+            'width': 't', # 't' stands for text, overrite
+            'textInside': ['test cdnterers', (255, 255, 255), 1] # Text, color, padding (length text to border)
         }]

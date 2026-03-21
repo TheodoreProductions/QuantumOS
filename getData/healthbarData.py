@@ -1,5 +1,6 @@
 def run(screen, health):
     unallowedScreens = []
+    health = 1000
 
     if health < 101:
         normalHealth = health
@@ -42,29 +43,29 @@ def run(screen, health):
             'y': 0,
             'border': [healthBorder, (185, 0, 0)],
             'color': (235, 0, 0),
-            'height': 8,
+            'height': 't',
             'width': normalHealth,
-            'textInside': ['', (0, 0, 0), 0]
+            'textInside': ['Health: ' + str(health), (0, 0, 0), 1]
         }, {
             'x': 100,
             'y': 0,
             'border': [shieldBorder, (205, 205, 0)],
             'color': (235, 235, 0),
-            'height': 8,
+            'height': 't',
             'width': shieldHealth,
-            'textInside': ['', (0, 0, 0), 0]
+            'textInside': ['', (0, 0, 0), 1]
         }, {
-            'x': 200,
-            'y': 0,
+            'x': 0,
+            'y': 25,
             'border': [extraShieldHealthMainBorder, (0, 0, 185)],
             'color': (0, 0, 235),
             'height': 8,
             'width': extraShieldHealthMain,
-            'textInside': ['', (0, 0, 0), 0]
+            'textInside': ['', (0, 0, 0), 1]
         }, {
-            'x': 200 + extraShieldHealthMain,
-            'y': 0,
-            'border': [extraShieldHealthExtraBorder, (0, 0, 0)],
+            'x': extraShieldHealthMain,
+            'y': 14,
+            'border': [extraShieldHealthExtraBorder, (0, 0, 235)],
             'color': (0, 0, 235),
             'height': extraShieldHealthExtra,
             'width': 1,

@@ -4,7 +4,7 @@ def run(boxList, p):
 
     for box in boxList:
         x = box['x']
-        y = box['y'] * p
+        y = box['y']
 
         c = box['color']
 
@@ -33,15 +33,18 @@ def run(boxList, p):
             x = 1024 - w
         else:
             x = x * p
+        
+        if x == 'cccc':
+            x = 512 - w / 2
+        if y == 'c':
+            y = 512 - h / 2
 
         textData.append({
             'text': [[t, tc]],
-            'x': x + rtp + 1,
-            'y': y + rtp + 1,
+            'x': (x + tp + 4) / 4,
+            'y': (y + tp + 4) / 4,
             'size': 1
         })
-
-        print(x)
 
         # AAAAA
         # BCCCD

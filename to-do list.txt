@@ -3,10 +3,10 @@ Sandbox Escape:
 
 To do: 
 
-Fix Boxes
 Add healthbar showings
 Add coordinates
 Add Area A
 Add a title screen
+Add box middle anchoring
 
 Done:
