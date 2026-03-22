@@ -1,5 +1,21 @@
 def run(screen):
+    hitboxes = []
+
     if screen == 'debug':
-        return []
+        hitboxes = appendLists(hitboxes, [{
+            'x': 0,
+            'y': 0,
+            'w': 2,
+            'h': 2
+        }])
     else:
-        return []
+        # hitboxes = appendLists(hitboxes, [])
+        a = 0
+
+    return hitboxes
+
+def appendLists(list1, list2):
+    for l in list2:
+        list1.append(l)
+    
+    return list1

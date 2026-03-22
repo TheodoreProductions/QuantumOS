@@ -31,13 +31,15 @@ def run(boxList, p):
 
         if x == 'r': # Right anchor
             x = 1024 - w
+        elif x == 'c': # Centre anchor
+            x = 512 - w / 2
         else:
             x = x * p
         
-        if x == 'cccc':
-            x = 512 - w / 2
         if y == 'c':
             y = 512 - h / 2
+        else:
+            y = y * p
 
         textData.append({
             'text': [[t, tc]],

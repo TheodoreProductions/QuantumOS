@@ -1,6 +1,5 @@
 def run(screen, health):
     unallowedScreens = []
-    health = 1000
 
     if health < 101:
         normalHealth = health
@@ -56,7 +55,7 @@ def run(screen, health):
             'textInside': ['', (0, 0, 0), 1]
         }, {
             'x': 0,
-            'y': 25,
+            'y': 14,
             'border': [extraShieldHealthMainBorder, (0, 0, 185)],
             'color': (0, 0, 235),
             'height': 8,

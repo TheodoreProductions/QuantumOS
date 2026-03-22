@@ -1,6 +1,8 @@
 def run(screen):
+    text = []
+
     if screen == 'debug':
-        return [{
+        text = appendLists(text, [{
             'text': [['''A BCDEFGHIJKLMNOPQRSTUVWXYZ
 abcdefghijklmnopqrstuvwxyz
 0123456789
@@ -20,11 +22,19 @@ The quick brown fox jumps over the lazy dog.
             'x': 1,
             'y': 89,
             'size': 1
-        }]
+        }])
     else:
-        return [{
+        text = appendLists(text, [{
             'text': [['E0000: screen number wrong', (255, 0, 255)]],
             'x': 1,
             'y': 1,
             'size': 1
-        }]
+        }])
+    
+    return text
+
+def appendLists(list1, list2):
+    for l in list2:
+        list1.append(l)
+    
+    return list1
