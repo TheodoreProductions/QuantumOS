@@ -4,9 +4,9 @@ def run(screen):
     if screen == 'debug':
         hitboxes = appendLists(hitboxes, [{
             'x': 0,
-            'y': 0,
-            'w': 2,
-            'h': 2
+            'y': 7,
+            'w': 1,
+            'h': 1
         }])
     else:
         # hitboxes = appendLists(hitboxes, [])

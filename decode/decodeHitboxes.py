@@ -34,6 +34,12 @@ def run(barrierList, b, p):
         rectlist.append([x + 12 * xp, y + 12 * yp, xp, yp, r])
         rectlist.append([x + 3 * xp, y + 13 * yp, 10 * xp, 2 * yp, r])
 
-        rectlist.append([x, y, w * b, 0.5, r])
-        rectlist.append([x + w * b, y, 0.5, h, r])
+        bh = 0.5 * p * h
+        bw = 0.5 * p * w
+        
+        rectlist.append([x, y, w * b, bh, r])
+        rectlist.append([x + w * b - bw, y, bw, h * b, r])
+        rectlist.append([x, y + h * b - bh, w * b, bh, r])
+        rectlist.append([x, y, bw, h * b, r])
+
     return rectlist

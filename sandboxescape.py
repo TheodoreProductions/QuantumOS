@@ -7,12 +7,18 @@ from decode import decodeHitboxes
 from decode import decodePlayer
 from decode import decodeBoxes
 
+# Moving
 from getData import blockData
 from getData import hitboxData
 from getData import textData
+
+# Stationary
 from getData import stationaryTextData
 from getData import stationaryBoxData
 from getData import healthbarData
+
+# Constant update stationary
+from getData import constantUpdateStationaryTextData
 
 def version():
     # major.medium.minor.bugfix (Diden't add anything)
@@ -61,7 +67,7 @@ def convertStringIntoPygameRects(text, p):
 
         text_x = t['x']
         text_y = t['y']
-        text_size = t['size']
+        textSize = t['size']
         for i in range(len(text_string)):
             current_color = text_colors[i]
 
@@ -83,9 +89,9 @@ def convertStringIntoPygameRects(text, p):
                     spaceDelay = -6
             else:
                 if text_x == 'mid': # If either values are 'mid', calculate
-                    text_x = (256 - findLengthOfText(text_string)) / 2
+                    text_x = (256 - findLengthOfText(text_string, textSize)) / 2
                 if text_y == 'mid':
-                    text_y = (256 - findLengthOfText(text_string)) / 2
+                    text_y = (256 - findHeightOfText(text_string, textSize)) / 2
 
                 if text_x == '-': # Going to negetive coordinates
                     text_x = 1
@@ -93,11 +99,11 @@ def convertStringIntoPygameRects(text, p):
                     text_y = 1
 
                 if text_x == '+': # Going to positive coordinates
-                    text_x = 256 - findLengthOfText(text_string)
+                    text_x = 256 - findLengthOfText(text_string, textSize)
                 if text_y == '+':
-                    text_y = 256 - findLengthOfText(text_string)
+                    text_y = 256 - findHeightOfText(text_string, textSize)
                 
-                textCode.append([text_string[i], text_x + spaceDelay, text_y + verticalDelay, current_color, text_size])
+                textCode.append([text_string[i], text_x + spaceDelay, text_y + verticalDelay, current_color, textSize])
 
             spaceDelay += 6
 
@@ -105,7 +111,7 @@ def convertStringIntoPygameRects(text, p):
     rectList = turnBlocksIntoPygameRects(rectList)
     return rectList
 
-def findLengthOfText(textList): # The 'text' attribute in getData Text files
+def findLengthOfText(textList, textSize):
     totalLength = 0
 
     for text in textList:
@@ -124,8 +130,21 @@ def findLengthOfText(textList): # The 'text' attribute in getData Text files
                 totalLength += 5
             
             totalLength += 1
-
+    
+    totalLength *= textSize
     return totalLength
+
+def findHeightOfText(textList, textSize):
+    totalHeight = 1
+
+    for text in textList:
+        for t in text:
+            if t == '\n':
+                totalHeight += 1
+    
+    totalHeight *= 9
+    totalHeight *= textSize
+    return totalHeight
 
 def main():
     fullName = version()
@@ -162,6 +181,8 @@ def main():
     speed = 6
     frictionSpeed = 3
     health = 100
+    x = 0
+    y = 0
 
     # Game loop
     running = True
@@ -170,6 +191,10 @@ def main():
 
         # Detect keys
         keys = pygame.key.get_pressed()
+
+        # ------------------
+        # ----- Update -----
+        # ------------------
             
         if update:
 
@@ -190,7 +215,7 @@ def main():
             player = turnBlocksIntoPygameRects(player)
 
             # Text
-            stationaryText = stationaryTextData.run(screenNum)            
+            stationaryText = stationaryTextData.run(screenNum, x, y)            
 
             stationaryText = convertStringIntoPygameRects(stationaryText, 4)
 
@@ -235,6 +260,16 @@ def main():
 
             # Update update
             update = False
+        
+        # ---------------------------
+        # ----- Constant update -----
+        # ---------------------------
+
+        # Text
+        constantUpdateStationaryText = constantUpdateStationaryTextData.run(screenNum, x, y)
+        print(x, y)            
+
+        constantUpdateStationaryText = convertStringIntoPygameRects(constantUpdateStationaryText, 4)
 
         # --------------------------
         # ----- Quit Detection -----
@@ -280,6 +315,9 @@ def main():
             # Apply movement
             rect[0].x += xVelocity // 10
             rect[0].y += yVelocity // 10
+        
+        x -= xVelocity // 10
+        y -= yVelocity // 10
 
         actualRects = 0
         drawnRects = 0

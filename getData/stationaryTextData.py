@@ -1,8 +1,14 @@
-def run(screen):
+def run(screen, x, y):
     text = []
 
+    text = appendLists(text, [{
+        'text': [['X: ' + str(x) + ', Y: ' + str(y), (0, 0, 0)]],
+        'x': 1,
+        'y': '+',
+        'size': 1
+    }])
+
     if screen == 'debug':
-        
         text = appendLists(text, [{
             'text': [['This is some stationary text.', (0, 155, 0)]],
             'x': 1,
