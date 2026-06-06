@@ -1,4 +1,4 @@
-def run(screen):
+def run(screen, x, y):
     blocks = []
 
     if screen == 'debug':
@@ -13,6 +13,10 @@ def run(screen):
             'x': 0,
             'y': 0
         }])
+    
+    for block in blocks:
+        block['x'] += x
+        block['y'] += y
     
     return blocks
 

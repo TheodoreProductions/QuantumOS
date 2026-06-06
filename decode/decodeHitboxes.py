@@ -8,8 +8,6 @@ def run(barrierList, b, p):
         w = barrier['w']
         h = barrier['h']
 
-        print(x, w * b, h)
-
         r = (255, 0, 0)
 
         rectlist.append([x + 3 * xp, y + yp, 10 * xp, 2 * yp, r])

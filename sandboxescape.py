@@ -17,9 +17,6 @@ from getData import stationaryTextData
 from getData import stationaryBoxData
 from getData import healthbarData
 
-# Constant update stationary
-from getData import constantUpdateStationaryTextData
-
 def version():
     # major.medium.minor.bugfix (Diden't add anything)
     # Can have m/m/m and bugfix at same time
@@ -39,7 +36,7 @@ def addLists(listList):
             totalList.append(thing)
     return totalList
 
-def turnBlocksIntoPygameRects(blocks):
+def turnRectlistsIntoPygameRects(blocks):
     newBlocks = []
     for i in blocks:
         rect = pygame.Rect(i[0], i[1], i[2], i[3])
@@ -47,7 +44,7 @@ def turnBlocksIntoPygameRects(blocks):
         newBlocks.append(newRect)
     return newBlocks
 
-def convertStringIntoPygameRects(text, p):
+def convertStringIntoPygameRectlists(text, p):
     textCode = []
     rectList = []
     for t in text:
@@ -108,7 +105,6 @@ def convertStringIntoPygameRects(text, p):
             spaceDelay += 6
 
     rectList = decodeText.run(textCode, p)
-    rectList = turnBlocksIntoPygameRects(rectList)
     return rectList
 
 def findLengthOfText(textList, textSize):
@@ -178,11 +174,13 @@ def main():
     # Initialize player settings
     xVelocity = 0
     yVelocity = 0
-    speed = 6
-    frictionSpeed = 3
+    speed = 3
+    frictionSpeed = 1
     health = 100
-    x = 0
-    y = 0
+    x = (width - 20) / 2
+    y = (height - 60) / 2
+    rx = 0
+    ry = 0
 
     # Game loop
     running = True
@@ -191,85 +189,73 @@ def main():
 
         # Detect keys
         keys = pygame.key.get_pressed()
-
-        # ------------------
-        # ----- Update -----
-        # ------------------
-            
-        if update:
-
-            # ------------------------------
-            # ----- Stationary objects -----
-            # ------------------------------
-
-            # Healthbar
-            healthbar = healthbarData.run(screenNum, health)
-            healthbar, healthbarText = decodeBoxes.run(healthbar, 4)
-            healthbar = turnBlocksIntoPygameRects(healthbar)
-            healthbarText = convertStringIntoPygameRects(healthbarText, 4) 
-
-            # Define player
-            x = (width - 20) / 2
-            y = (height - 60) / 2
-            player = decodePlayer.run(x, y, 4)
-            player = turnBlocksIntoPygameRects(player)
-
-            # Text
-            stationaryText = stationaryTextData.run(screenNum, x, y)            
-
-            stationaryText = convertStringIntoPygameRects(stationaryText, 4)
-
-            # Stationary boxes
-            stationaryBoxes = stationaryBoxData.run(screenNum)
-            
-            stationaryBoxes, stationaryBoxText = decodeBoxes.run(stationaryBoxes, 4)
-            stationaryBoxes = turnBlocksIntoPygameRects(stationaryBoxes)
-            stationaryBoxText = convertStringIntoPygameRects(stationaryBoxText, 4)
-
-            # Combine them all
-            stationaryRects = addLists([stationaryText, stationaryBoxes, stationaryBoxText])
-            if showPlayer:
-                stationaryRects = addLists([stationaryRects, player, healthbar, healthbarText])
-            
-            # --------------------------
-            # ----- Moving objects -----
-            # --------------------------
-
-            # Blocks
-            blocks = blockData.run(screenNum)
-            
-            blocks = decodeBlocks.run(blocks, 64, 4)
-            blocks = turnBlocksIntoPygameRects(blocks)
-
-            # Hitboxes
-            hitboxes = hitboxData.run(screenNum)
-            
-            if showHitboxes:
-                hitboxes = decodeHitboxes.run(hitboxes, 64, 4)
-                hitboxes = turnBlocksIntoPygameRects(hitboxes)
-            else:
-                hitboxes = []
-
-            # Text
-            text = textData.run(screenNum)            
-
-            text = convertStringIntoPygameRects(text, 4)
-
-            # Combine them all
-            movingRects = addLists([blocks, text, hitboxes])
-
-            # Update update
-            update = False
-        
+                
         # ---------------------------
         # ----- Constant update -----
         # ---------------------------
 
-        # Text
-        constantUpdateStationaryText = constantUpdateStationaryTextData.run(screenNum, x, y)
-        print(x, y)            
+        # ------------------------------
+        # ----- Stationary objects -----
+        # ------------------------------
 
-        constantUpdateStationaryText = convertStringIntoPygameRects(constantUpdateStationaryText, 4)
+        # Healthbar
+        healthbar = healthbarData.run(screenNum, health)
+        healthbar, healthbarText = decodeBoxes.run(healthbar, 4)
+        # healthbar = turnRectlistsIntoPygameRects(healthbar)
+        healthbarText = convertStringIntoPygameRectlists(healthbarText, 4) 
+
+        # Define player
+        playerx = (width - 20) / 2
+        playery = (height - 60) / 2
+        player = decodePlayer.run(playerx, playery, 4)
+        # player = turnRectlistsIntoPygameRects(player)
+
+        # Text
+        stationaryText = stationaryTextData.run(screenNum, x, y)            
+
+        stationaryText = convertStringIntoPygameRectlists(stationaryText, 4)
+
+        # Stationary boxes
+        stationaryBoxes = stationaryBoxData.run(screenNum)
+        
+        stationaryBoxes, stationaryBoxText = decodeBoxes.run(stationaryBoxes, 4)
+        # stationaryBoxes = turnRectlistsIntoPygameRects(stationaryBoxes)
+        stationaryBoxText = convertStringIntoPygameRectlists(stationaryBoxText, 4)
+
+        # Combine them all
+        stationaryRectlists = addLists([stationaryText, stationaryBoxes, stationaryBoxText])
+        if showPlayer:
+            stationaryRectlists = addLists([stationaryRectlists, player, healthbar, healthbarText])
+        
+        # --------------------------
+        # ----- Moving objects -----
+        # --------------------------
+
+        # Blocks
+        blocks = blockData.run(screenNum, rx / 16, ry / 16)
+        
+        blocks = decodeBlocks.run(blocks, 64, 4)
+        # blocks = turnRectlistsIntoPygameRects(blocks)
+
+        # Hitboxes
+        hitboxes = hitboxData.run(screenNum, rx / 16, ry / 16)
+        
+        if showHitboxes:
+            hitboxes = decodeHitboxes.run(hitboxes, 64, 4)
+            # hitboxes = turnRectlistsIntoPygameRects(hitboxes)
+        else:
+            hitboxes = []
+
+        # Text
+        text = textData.run(screenNum, rx, ry)            
+
+        text = convertStringIntoPygameRectlists(text, 4)
+
+        # Combine them all
+        movingRectlists = addLists([blocks, text, hitboxes])
+
+        # Update update
+        update = False
 
         # --------------------------
         # ----- Quit Detection -----
@@ -310,14 +296,11 @@ def main():
             yVelocity += frictionSpeed
             if yVelocity > 0:  # Prevents overshooting above zero
                 yVelocity = 0
-
-        for rect in movingRects:
-            # Apply movement
-            rect[0].x += xVelocity // 10
-            rect[0].y += yVelocity // 10
         
-        x -= xVelocity // 10
-        y -= yVelocity // 10
+        rx += xVelocity // 10
+        ry += yVelocity // 10
+        x = rx + (width - 20) / 2
+        y = ry + (width - 60) / 2
 
         actualRects = 0
         drawnRects = 0
@@ -326,18 +309,23 @@ def main():
         screen.fill((255, 255, 255))
         limit = 1024
         nLimit = int('-' + str(limit))
-        for rect in movingRects:
+        for rect in movingRectlists:
             actualRects += 1
-            if rect[0].x < nLimit or rect[0].x > width or rect[0].y < nLimit or rect[0].y > limit:
+            if rect[0] < nLimit or rect[0] > width or rect[0] < nLimit or rect[0] > limit:
                 continue
-            pygame.draw.rect(screen, rect[1], rect[0])
             drawnRects += 1
-        for rect in stationaryRects:
+        for rect in stationaryRectlists:
             actualRects += 1
-            if rect[0].x < nLimit or rect[0].x > limit or rect[0].y < nLimit or rect[0].y > limit:
+            if rect[0] < nLimit or rect[0] > limit or rect[0] < nLimit or rect[0] > limit:
                 continue
-            pygame.draw.rect(screen, rect[1], rect[0])
             drawnRects += 1
+
+        for rect in movingRectlists:
+            pygameRect = pygame.Rect(rect[0], rect[1], rect[2], rect[3])
+            pygame.draw.rect(screen, rect[4], pygameRect)
+        for rect in stationaryRectlists:
+            pygameRect = pygame.Rect(rect[0], rect[1], rect[2], rect[3])
+            pygame.draw.rect(screen, rect[4], pygameRect)
 
         # print(actualRects, drawnRects)
 

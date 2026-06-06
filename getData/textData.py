@@ -1,4 +1,4 @@
-def run(screen):
+def run(screen, x, y):
     text = []
 
     if screen == 'debug':
@@ -30,6 +30,10 @@ The quick brown fox jumps over the lazy dog.
             'y': 1,
             'size': 1
         }])
+    
+    for t in text:
+        t['x'] += x
+        t['y'] += y
     
     return text
 

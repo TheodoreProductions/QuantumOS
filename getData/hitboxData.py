@@ -1,4 +1,4 @@
-def run(screen):
+def run(screen, x, y):
     hitboxes = []
 
     if screen == 'debug':
@@ -11,6 +11,10 @@ def run(screen):
     else:
         # hitboxes = appendLists(hitboxes, [])
         a = 0
+    
+    for hitbox in hitboxes:
+        hitbox['x'] += x
+        hitbox['y'] += y
 
     return hitboxes
 
