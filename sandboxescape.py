@@ -297,10 +297,22 @@ def main():
             if yVelocity > 0:  # Prevents overshooting above zero
                 yVelocity = 0
         
-        rx += xVelocity // 10
-        ry += yVelocity // 10
+        rx += xVelocity / 10
+        ry += yVelocity / 10
+
         x = rx + (width - 20) / 2
+        if x % 1 < 0.5:
+            x = x // 1
+        else:
+            x += 0.5
+            x = x // 1
+        
         y = ry + (width - 60) / 2
+        if y % 1 < 0.5:
+            y = y // 1
+        else:
+            y += 0.5
+            y = y // 1
 
         actualRects = 0
         drawnRects = 0
