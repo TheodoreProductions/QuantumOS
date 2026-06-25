@@ -174,8 +174,10 @@ def main():
     # Initialize player settings
     xVelocity = 0
     yVelocity = 0
-    speed = 3
-    frictionSpeed = 1
+    runXFriction = False
+    runYFriction = False
+    speed = 1.2
+    frictionSpeed = 2
     health = 100
     x = (width - 20) / 2
     y = (height - 60) / 2
@@ -273,29 +275,41 @@ def main():
         # Movement
         if keys[pygame.K_LEFT]:
             xVelocity += speed
+            runXFriction = False
         elif keys[pygame.K_RIGHT]:
             xVelocity -= speed
-        if xVelocity > 0:
-            xVelocity -= frictionSpeed
-            if xVelocity < 0:  # Prevents overshooting below zero
-                xVelocity = 0
-        elif xVelocity < 0:
-            xVelocity += frictionSpeed
-            if xVelocity > 0:  # Prevents overshooting above zero
-                xVelocity = 0
+            runXFriction = False
+        else:
+            runXFriction = True
+        
+        if runXFriction:
+            if xVelocity > 0:
+                xVelocity -= frictionSpeed
+                if xVelocity < 0:  # Prevents overshooting below zero
+                    xVelocity = 0
+            elif xVelocity < 0:
+                xVelocity += frictionSpeed
+                if xVelocity > 0:  # Prevents overshooting above zero
+                    xVelocity = 0
 
         if keys[pygame.K_UP]:
             yVelocity += speed
+            runYFriction = False
         elif keys[pygame.K_DOWN]:
             yVelocity -= speed
-        if yVelocity > 0:
-            yVelocity -= frictionSpeed
-            if yVelocity < 0:  # Prevents overshooting below zero
-                yVelocity = 0
-        elif yVelocity < 0:
-            yVelocity += frictionSpeed
-            if yVelocity > 0:  # Prevents overshooting above zero
-                yVelocity = 0
+            runYFriction = False
+        else:
+            runYFriction = True
+        
+        if runYFriction:
+            if yVelocity > 0:
+                yVelocity -= frictionSpeed
+                if yVelocity < 0:  # Prevents overshooting below zero
+                    yVelocity = 0
+            elif yVelocity < 0:
+                yVelocity += frictionSpeed
+                if yVelocity > 0:  # Prevents overshooting above zero
+                    yVelocity = 0
         
         rx += xVelocity / 10
         ry += yVelocity / 10
