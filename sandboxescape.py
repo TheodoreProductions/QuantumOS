@@ -142,6 +142,14 @@ def findHeightOfText(textList, textSize):
     totalHeight *= textSize
     return totalHeight
 
+def round(n):
+    if n % 1 < 0.5:
+        n = n // 1
+    else:
+        n += 0.5
+        n = n // 1
+    return n
+
 def main():
     fullName = version()
 
@@ -179,10 +187,13 @@ def main():
     speed = 1.2
     frictionSpeed = 2
     health = 100
-    x = (width - 20) / 2
-    y = (height - 60) / 2
+    xl = 0
+    xr = 0
+    yt = 0
+    yb = 0
     rx = 0
     ry = 0
+    hitboxCoordinates = []
 
     # Game loop
     running = True
@@ -213,7 +224,7 @@ def main():
         # player = turnRectlistsIntoPygameRects(player)
 
         # Text
-        stationaryText = stationaryTextData.run(screenNum, x, y)            
+        stationaryText = stationaryTextData.run(screenNum, xl, yt, xr, yb)            
 
         stationaryText = convertStringIntoPygameRectlists(stationaryText, 4)
 
@@ -240,7 +251,7 @@ def main():
         # blocks = turnRectlistsIntoPygameRects(blocks)
 
         # Hitboxes
-        hitboxes = hitboxData.run(screenNum, rx / 16, ry / 16)
+        hitboxes, hitboxCoordinates = hitboxData.run(screenNum, rx / 16, ry / 16)
         
         if showHitboxes:
             hitboxes = decodeHitboxes.run(hitboxes, 64, 4)
@@ -314,20 +325,36 @@ def main():
         rx += xVelocity / 10
         ry += yVelocity / 10
 
-        x = rx + (width - 20) / 2
-        if x % 1 < 0.5:
-            x = x // 1
-        else:
-            x += 0.5
-            x = x // 1
-        
-        y = ry + (width - 60) / 2
-        if y % 1 < 0.5:
-            y = y // 1
-        else:
-            y += 0.5
-            y = y // 1
+        print(rx, ry, xl, yt, xr, yb)
+        print(hitboxCoordinates)
 
+        xl = -rx * 4 + (width - 20) / 2
+        xr = -rx * 4 + (width - 20) / 2 + 20
+        xl = round(xl)
+        xr = round(xr)
+        xl = xl / 4
+        xr = xr / 4
+        
+        yt = -ry * 4 + (height - 60) / 2
+        yb = -ry * 4 + (height - 60) / 2 + 60
+        yt = round(yt)
+        yb = round(yb)
+        yt = yt / 4
+        yb = yb / 4
+
+        for hitboxCoordinate in hitboxCoordinates:
+            if (xl < hitboxCoordinate['xr']) & (xr > hitboxCoordinate['xl']) & (xVelocity > 0) & (yt < hitboxCoordinate['yb'] - 1) & (yb > hitboxCoordinate['yt'] + 1):
+                rx = (width + 20) / 8 - (hitboxCoordinate['xr'] - hitboxCoordinate['xl']) - hitboxCoordinate['xl'] - 20 / 4
+                xVelocity = 0
+            elif (xr > hitboxCoordinate['xl']) & (xl < hitboxCoordinate['xr']) & (xVelocity < 0) & (yt < hitboxCoordinate['yb'] - 1) & (yb > hitboxCoordinate['yt'] + 1):
+                rx = (width + 20) / 8 - hitboxCoordinate['xl'] - 1
+                xVelocity = 0
+            elif (yt < hitboxCoordinate['yb']) & (yb > hitboxCoordinate['yt']) & (yVelocity > 0) & (xl < hitboxCoordinate['xr'] - 1) & (xr > hitboxCoordinate['xl'] + 1):
+                ry = (width + 60) / 8 - (hitboxCoordinate['yb'] - hitboxCoordinate['yt']) - hitboxCoordinate['yt'] - 60 / 4
+                yVelocity = 5
+            elif (yb > hitboxCoordinate['yt']) & (yt < hitboxCoordinate['yb']) & (yVelocity < 0) & (xl < hitboxCoordinate['xr'] - 1) & (xr > hitboxCoordinate['xl'] + 1):
+                ry = (width + 60) / 8 - hitboxCoordinate['yt'] - 1
+                yVelocity = 0
         actualRects = 0
         drawnRects = 0
 
