@@ -18,12 +18,11 @@ from getData import stationaryBoxData
 from getData import healthbarData
 
 def version():
-    # major.medium.minor.bugfix (Diden't add anything)
-    # Can have m/m/m and bugfix at same time
-    # Dont need to increment m/m/m/b when the ending number changes
-    version = '0.0.0.0 000005' # +1 every git commit even when not this file is changed
+    # major.medium.minor
+    # Dont need to increment m/m/m when the ending number changes
+    version = '0.0.0 000000' # +1 every git commit even when not this file is changed
 
-    name = 'sandbox-escape'
+    name = 'Sandbox-escape'
     return name + ' ' + version
 
 def doNothing():
@@ -356,15 +355,19 @@ def main():
                 wasTouchingWall = 'False'
 
             if (xl < hitboxCoordinate['xr']) & (xr >= hitboxCoordinate['xl']) & (xVelocity > 0) & (yt <= hitboxCoordinate['yb'] - hitboxHeight / 32) & (yb > hitboxCoordinate['yt'] + hitboxHeight / 32):
+                # Collision for right side
                 rx = (width + 20) / 8 - hitboxWidth - hitboxCoordinate['xl'] - 20 / 4
                 xVelocity = 0
             elif (xr >= hitboxCoordinate['xl']) & (xl <= hitboxCoordinate['xr']) & (xVelocity < 0) & (yt <= hitboxCoordinate['yb'] - hitboxHeight / 32) & (yb > hitboxCoordinate['yt'] + hitboxHeight / 32):
+                # Collision for left side
                 rx = (width + 20) / 8 - hitboxCoordinate['xl']
                 xVelocity = 0
             elif (yt < hitboxCoordinate['yb']) & (yb >= hitboxCoordinate['yt']) & (yVelocity > 0) & (xl <= hitboxCoordinate['xr'] - hitboxWidth / 32) & (xr > hitboxCoordinate['xl'] + hitboxWidth / 32):
+                # Collision for bottom side
                 ry = (width + 60) / 8 - hitboxHeight - hitboxCoordinate['yt'] - 60 / 4
                 yVelocity = 0
             elif (yb >= hitboxCoordinate['yt']) & (yt <= hitboxCoordinate['yb']) & (yVelocity < 0) & (xl <= hitboxCoordinate['xr'] - hitboxWidth / 32) & (xr > hitboxCoordinate['xl'] + hitboxWidth / 32):
+                
                 ry = (width + 60) / 8 - hitboxCoordinate['yt']
                 yVelocity = 0
             
