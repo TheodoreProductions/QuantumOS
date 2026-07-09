@@ -194,6 +194,7 @@ def main():
     rx = 0
     ry = 0
     hitboxCoordinates = []
+    wasTouchingWall = 'False'
 
     # Game loop
     running = True
@@ -325,9 +326,6 @@ def main():
         rx += xVelocity / 10
         ry += yVelocity / 10
 
-        print(rx, ry, xl, yt, xr, yb)
-        print(hitboxCoordinates)
-
         xl = -rx * 4 + (width - 20) / 2
         xr = -rx * 4 + (width - 20) / 2 + 20
         xl = round(xl)
@@ -343,18 +341,33 @@ def main():
         yb = yb / 4
 
         for hitboxCoordinate in hitboxCoordinates:
-            if (xl < hitboxCoordinate['xr']) & (xr > hitboxCoordinate['xl']) & (xVelocity > 0) & (yt < hitboxCoordinate['yb'] - 1) & (yb > hitboxCoordinate['yt'] + 1):
-                rx = (width + 20) / 8 - (hitboxCoordinate['xr'] - hitboxCoordinate['xl']) - hitboxCoordinate['xl'] - 20 / 4
+            hitboxWidth = hitboxCoordinate['xr'] - hitboxCoordinate['xl']
+            hitboxHeight = hitboxCoordinate['yb'] - hitboxCoordinate['yt']
+
+            if (round(xr) == hitboxCoordinate['xl']) & (xl <= hitboxCoordinate['xr']) & (yt <= hitboxCoordinate['yb'] - hitboxHeight / 32) & (yb > hitboxCoordinate['yt'] + hitboxHeight / 32):
+                wasTouchingWall = 'Right'
+            elif (round(xl) == hitboxCoordinate['xr']) & (xl <= hitboxCoordinate['xr']) & (yt <= hitboxCoordinate['yb'] - hitboxHeight / 32) & (yb > hitboxCoordinate['yt'] + hitboxHeight / 32):
+                wasTouchingWall = 'Left'
+            elif (round(yt) == hitboxCoordinate['yb']) & (yb >= hitboxCoordinate['yt']) & (xl <= hitboxCoordinate['xr'] - hitboxWidth / 32) & (xr > hitboxCoordinate['xl'] + hitboxWidth / 32):
+                wasTouchingWall = 'Bottom'
+            elif (round(yb) == hitboxCoordinate['yt']) & (yt <= hitboxCoordinate['yb']) & (xl <= hitboxCoordinate['xr'] - hitboxWidth / 32) & (xr > hitboxCoordinate['xl'] + hitboxWidth / 32):
+                wasTouchingWall = 'Top'
+            else:
+                wasTouchingWall = 'False'
+
+            if (xl < hitboxCoordinate['xr']) & (xr >= hitboxCoordinate['xl']) & (xVelocity > 0) & (yt <= hitboxCoordinate['yb'] - hitboxHeight / 32) & (yb > hitboxCoordinate['yt'] + hitboxHeight / 32):
+                rx = (width + 20) / 8 - hitboxWidth - hitboxCoordinate['xl'] - 20 / 4
                 xVelocity = 0
-            elif (xr > hitboxCoordinate['xl']) & (xl < hitboxCoordinate['xr']) & (xVelocity < 0) & (yt < hitboxCoordinate['yb'] - 1) & (yb > hitboxCoordinate['yt'] + 1):
-                rx = (width + 20) / 8 - hitboxCoordinate['xl'] - 1
+            elif (xr >= hitboxCoordinate['xl']) & (xl <= hitboxCoordinate['xr']) & (xVelocity < 0) & (yt <= hitboxCoordinate['yb'] - hitboxHeight / 32) & (yb > hitboxCoordinate['yt'] + hitboxHeight / 32):
+                rx = (width + 20) / 8 - hitboxCoordinate['xl']
                 xVelocity = 0
-            elif (yt < hitboxCoordinate['yb']) & (yb > hitboxCoordinate['yt']) & (yVelocity > 0) & (xl < hitboxCoordinate['xr'] - 1) & (xr > hitboxCoordinate['xl'] + 1):
-                ry = (width + 60) / 8 - (hitboxCoordinate['yb'] - hitboxCoordinate['yt']) - hitboxCoordinate['yt'] - 60 / 4
-                yVelocity = 5
-            elif (yb > hitboxCoordinate['yt']) & (yt < hitboxCoordinate['yb']) & (yVelocity < 0) & (xl < hitboxCoordinate['xr'] - 1) & (xr > hitboxCoordinate['xl'] + 1):
-                ry = (width + 60) / 8 - hitboxCoordinate['yt'] - 1
+            elif (yt < hitboxCoordinate['yb']) & (yb >= hitboxCoordinate['yt']) & (yVelocity > 0) & (xl <= hitboxCoordinate['xr'] - hitboxWidth / 32) & (xr > hitboxCoordinate['xl'] + hitboxWidth / 32):
+                ry = (width + 60) / 8 - hitboxHeight - hitboxCoordinate['yt'] - 60 / 4
                 yVelocity = 0
+            elif (yb >= hitboxCoordinate['yt']) & (yt <= hitboxCoordinate['yb']) & (yVelocity < 0) & (xl <= hitboxCoordinate['xr'] - hitboxWidth / 32) & (xr > hitboxCoordinate['xl'] + hitboxWidth / 32):
+                ry = (width + 60) / 8 - hitboxCoordinate['yt']
+                yVelocity = 0
+            
         actualRects = 0
         drawnRects = 0
 
