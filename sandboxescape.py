@@ -344,9 +344,9 @@ def main():
             hitboxHeight = hitboxCoordinate['yb'] - hitboxCoordinate['yt']
 
             if (round(xr) == hitboxCoordinate['xl']) & (xl <= hitboxCoordinate['xr']) & (yt <= hitboxCoordinate['yb'] - hitboxHeight / 32) & (yb > hitboxCoordinate['yt'] + hitboxHeight / 32):
-                wasTouchingWall = 'Right'
-            elif (round(xl) == hitboxCoordinate['xr']) & (xl <= hitboxCoordinate['xr']) & (yt <= hitboxCoordinate['yb'] - hitboxHeight / 32) & (yb > hitboxCoordinate['yt'] + hitboxHeight / 32):
                 wasTouchingWall = 'Left'
+            elif (round(xl) == hitboxCoordinate['xr']) & (xl <= hitboxCoordinate['xr']) & (yt <= hitboxCoordinate['yb'] - hitboxHeight / 32) & (yb > hitboxCoordinate['yt'] + hitboxHeight / 32):
+                wasTouchingWall = 'Right'
             elif (round(yt) == hitboxCoordinate['yb']) & (yb >= hitboxCoordinate['yt']) & (xl <= hitboxCoordinate['xr'] - hitboxWidth / 32) & (xr > hitboxCoordinate['xl'] + hitboxWidth / 32):
                 wasTouchingWall = 'Bottom'
             elif (round(yb) == hitboxCoordinate['yt']) & (yt <= hitboxCoordinate['yb']) & (xl <= hitboxCoordinate['xr'] - hitboxWidth / 32) & (xr > hitboxCoordinate['xl'] + hitboxWidth / 32):
@@ -354,23 +354,24 @@ def main():
             else:
                 wasTouchingWall = 'False'
 
-            if (xl < hitboxCoordinate['xr']) & (xr >= hitboxCoordinate['xl']) & (xVelocity > 0) & (yt <= hitboxCoordinate['yb'] - hitboxHeight / 32) & (yb > hitboxCoordinate['yt'] + hitboxHeight / 32):
+            if (xl < hitboxCoordinate['xr']) & (xr > hitboxCoordinate['xl']) & (xVelocity > 0) & (abs(xVelocity) >= abs(yVelocity)) & (yt <= hitboxCoordinate['yb'] - hitboxHeight / 32) & (yb > hitboxCoordinate['yt'] + hitboxHeight / 32) & (wasTouchingWall != 'Top') & (wasTouchingWall != 'Bottom'):
                 # Collision for right side
                 rx = (width + 20) / 8 - hitboxWidth - hitboxCoordinate['xl'] - 20 / 4
                 xVelocity = 0
-            elif (xr >= hitboxCoordinate['xl']) & (xl <= hitboxCoordinate['xr']) & (xVelocity < 0) & (yt <= hitboxCoordinate['yb'] - hitboxHeight / 32) & (yb > hitboxCoordinate['yt'] + hitboxHeight / 32):
+            elif (xr >= hitboxCoordinate['xl']) & (xl < hitboxCoordinate['xr']) & (xVelocity < 0) & (abs(xVelocity) >= abs(yVelocity)) & (yt <= hitboxCoordinate['yb'] - hitboxHeight / 32) & (yb > hitboxCoordinate['yt'] + hitboxHeight / 32) & (wasTouchingWall != 'Top') & (wasTouchingWall != 'Bottom'):
                 # Collision for left side
                 rx = (width + 20) / 8 - hitboxCoordinate['xl']
                 xVelocity = 0
-            elif (yt < hitboxCoordinate['yb']) & (yb >= hitboxCoordinate['yt']) & (yVelocity > 0) & (xl <= hitboxCoordinate['xr'] - hitboxWidth / 32) & (xr > hitboxCoordinate['xl'] + hitboxWidth / 32):
+            elif (yt < hitboxCoordinate['yb']) & (yb > hitboxCoordinate['yt']) & (yVelocity > 0) & (abs(yVelocity) >= abs(xVelocity)) & (xl <= hitboxCoordinate['xr'] - hitboxWidth / 32) & (xr > hitboxCoordinate['xl'] + hitboxWidth / 32) & (wasTouchingWall != 'Left') & (wasTouchingWall != 'Right'):
                 # Collision for bottom side
                 ry = (width + 60) / 8 - hitboxHeight - hitboxCoordinate['yt'] - 60 / 4
                 yVelocity = 0
-            elif (yb >= hitboxCoordinate['yt']) & (yt <= hitboxCoordinate['yb']) & (yVelocity < 0) & (xl <= hitboxCoordinate['xr'] - hitboxWidth / 32) & (xr > hitboxCoordinate['xl'] + hitboxWidth / 32):
-                
+            elif (yb >= hitboxCoordinate['yt']) & (yt < hitboxCoordinate['yb']) & (yVelocity < 0) & (abs(yVelocity) >= abs(xVelocity)) & (xl <= hitboxCoordinate['xr'] - hitboxWidth / 32) & (xr > hitboxCoordinate['xl'] + hitboxWidth / 32) & (wasTouchingWall != 'Left') & (wasTouchingWall != 'Right'):
+                # Collision for upper side
                 ry = (width + 60) / 8 - hitboxCoordinate['yt']
                 yVelocity = 0
             
+            print(wasTouchingWall)
         actualRects = 0
         drawnRects = 0
 

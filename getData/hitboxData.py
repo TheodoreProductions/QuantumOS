@@ -11,10 +11,15 @@ def run(screen, x, y):
             'w': 1,
             'h': 1
         }, {
-            'x': 5,
-            'y': 7,
-            'w': 2,
-            'h': 3
+            'x': 1, 
+            'y': 7, 
+            'w': 1, 
+            'h': 1
+        }, {
+            'x': -1,
+            'y': -1, 
+            'w': 1,
+            'h': 18
         }])
     else:
         # hitboxes = appendLists(hitboxes, [])
